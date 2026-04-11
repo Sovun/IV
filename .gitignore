@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# gallery images (managed locally, not committed to git)
+/public/gallery/
+/public/DSC_5392.JPG
+
 # debug
 npm-debug.log*
 yarn-debug.log*

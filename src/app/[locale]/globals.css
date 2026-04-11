@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Legacy tokens */
+  --color-cream-50: #FAFAF8;
+  --color-cream-100: #F5F3EF;
+  --color-cream-200: #EDE9E1;
+  --color-cream-300: #E8E4DC;
+  --color-charcoal-700: #3C3C3A;
+  --color-charcoal-800: #2C2C2A;
+  --color-charcoal-900: #1C1C1A;
+  --color-gold-400: #D4AA5C;
+  --color-gold-500: #C9A84C;
+  --color-gold-600: #B8973B;
+
+  /* Stitch Design System — The Curated Atelier */
+  --color-background: #fbf9f4;
+  --color-surface: #fbf9f4;
+  --color-surface-bright: #fbf9f4;
+  --color-surface-dim: #dbdad5;
+  --color-surface-container: #f0eee9;
+  --color-surface-container-low: #f5f3ee;
+  --color-surface-container-high: #eae8e3;
+  --color-surface-container-highest: #e4e2dd;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary: #5f5e5e;
+  --color-primary-container: #787776;
+  --color-on-primary: #ffffff;
+  --color-secondary: #775a19;
+  --color-secondary-container: #fed488;
+  --color-on-secondary: #ffffff;
+  --color-on-surface: #1b1c19;
+  --color-on-surface-variant: #4d453c;
+  --color-outline: #7f756b;
+  --color-outline-variant: #d1c4b9;
+
+  /* Fonts */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-headline: "Noto Serif", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-label: "Manrope", system-ui, sans-serif;
+
+  --tracking-widest2: 0.25em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  font-family: var(--font-body);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+  font-size: 1.25rem;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Elegant divider line */
+.divider {
+  width: 60px;
+  height: 1px;
+  background-color: #C9A84C;
+  margin: 0 auto;
+}

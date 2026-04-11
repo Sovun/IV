@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero_title": "Custom Furniture",
+    "hero_subtitle": "Mastery in Every Detail",
+    "hero_cta": "View Portfolio",
+    "hero_contact": "Get in Touch",
+    "intro_title": "Bespoke Furniture with Soul",
+    "intro_text": "For over 20 years, Igor Vasylkov has been crafting custom furniture of any complexity in Odessa, Ukraine. Each piece is a fusion of classical craftsmanship and contemporary design, tailored to your vision and space.",
+    "featured_title": "Featured Works",
+    "faq_title": "Frequently Asked Questions",
+    "faq_1_q": "Where to order custom furniture in Odessa?",
+    "faq_1_a": "Igor Vasylkov is a master craftsman specializing in custom furniture in Odessa, Ukraine. Call +380674864629 or email ive@ukr.net.",
+    "faq_2_q": "What types of furniture do you make?",
+    "faq_2_a": "Kitchens, wardrobes, doors, staircases, tables, restaurant décor, and any custom piece designed to your specifications.",
+    "faq_3_q": "How much does custom furniture cost?",
+    "faq_3_a": "Pricing depends on project complexity and materials. Contact us for a free consultation and estimate.",
+    "cta_title": "Ready to discuss your project?",
+    "cta_text": "Call or message us — free consultation and on-site visit available.",
+    "cta_call": "Call Now",
+    "cta_telegram": "Message on Telegram"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Works crafted with precision and soul",
+    "all": "All Works",
+    "kitchens": "Kitchens",
+    "wardrobes": "Wardrobes",
+    "doors": "Doors",
+    "stairs": "Stairs",
+    "tables": "Tables",
+    "restaurants": "Restaurant Décor"
+  },
+  "about": {
+    "title": "About the Craftsman",
+    "subtitle": "Igor Vasylkov — Custom Furniture Master",
+    "body": "For over two decades, Igor Vasylkov has dedicated himself to the art of bespoke furniture making. Each project is a dialogue between craftsman and client, where technical perfection meets individual vision. Igor's work can be found in private homes and restaurants across Odessa and Ukraine.",
+    "craft_title": "Approach to Craft",
+    "craft_text": "From the first sketch to final installation — every stage is personally overseen. We use quality materials, proven techniques, and original solutions for each commission.",
+    "location": "Odessa, Ukraine"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in touch for a free consultation",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "telegram_label": "Telegram",
+    "hours": "Mon–Sat: 9:00–19:00",
+    "location": "Odessa, Ukraine"
+  },
+  "footer": {
+    "tagline": "Mastery in Every Detail",
+    "rights": "All rights reserved"
+  }
+}
