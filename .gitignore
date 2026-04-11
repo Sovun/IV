@@ -24,9 +24,9 @@
 .DS_Store
 *.pem
 
-# gallery images (managed locally, not committed to git)
-/public/gallery/
-/public/DSC_5392.JPG
+# gallery images — committed for PoC; remove before production (use Instagram/CDN instead)
+# /public/gallery/
+# /public/DSC_5392.JPG
 
 # debug
 npm-debug.log*
