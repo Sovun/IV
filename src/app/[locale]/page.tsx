@@ -2,13 +2,13 @@ import { Link } from '@/i18n/navigation'
 import { getInstagramPhotos } from '@/lib/instagram'
 import Image from 'next/image'
 
-// Stitch design placeholder images (replaced by Instagram photos in production)
+// Fallback images from local gallery (used when Instagram token is not set)
 const STITCH = {
-  hero: '/DSC_5392.JPG',
-  heritage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBbvL3MnQSiTRpodTU97laOSQm-BHM84n-tjtF8olCJ6w0dnTnz4C0FHRpa6mb3S63hCbcNgt4Cknm9nT6x_3rPKqg3Iauj53w1aSvpu91-loBke1tzMtK_zOAsdDSvi7cNzRw5AI4PwPD27nJrFfFeLx8auHxHJE8BgMRc6DrXXUCkf8faYn8TC5tkVppj_oHRcL3KL_1qEJM6YIcqS2WazuXdbwRNIS7_6tq-y8189C58kt9kBamDE8W96yGGRIf01R03YOtRMxjt',
-  galleryLarge: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCugfUqPJMZ9pgSWh_LH8gCjTz4c2agrDBxtjT00b7CQV__w-v0fbyGm6X9De91UiLStAjgYYTkx1szJamFD-G1nC-uLWRKsWsTA5Zq5wZXDCkbh_Ui7QeoLjFDZv7llJnRHk04jOgcRLPp1zGT_ToXWI19ENXDvVadhm9WVxIjWy_-iOwYfBFzK6KMdhwIYXOuBcNYWCykNH7-yxfEJGPY0bnxVYWxr3T8M_XRPdf9jFIIDjmBSOriKcJJL8chbsdvEk3Cl2xII8qM',
-  gallerySide: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQUZHKmx6SSsyJSlBBSYQBhAWdevcdyMMwBJnFk5FOi9JHi7qK4mJJ1ugNVCGdQLIo0KZ6vdObxLrOZQqkP6fTNvlFY9SrsTsDE4VnDQ3uLXJMaUD202ZzbHJiyp8bs_x7DVrpqfRJHWkfPHuTnf1B8j3FaYJR6WQDq9-ITZA6D_4r5ae-6oT5MTC77gnbmCo2wIjJ4Dd7z85JFro0OEGnA7EI5B4us1GFOfK0JwYL2RjoepHBvWSdIlWrbigMC_C1w-we1vBtQsM2',
-  galleryAccent: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD5x8XOPtx8Njuw4h67eK0aVPRKHXk4aOeAGgv2BuQf8Ctukx02zXsxck_S1yGa1dTJx5UbokxdbtsRJwd1QKy89Adb0wyGiHVTIfYKCnm9wKDI5SSHIkhlILWTweQPLeV9WVuLcyft6cedDrgO9PF_P7ZdQYsQKPS8Nr8UXCVhCvVbB3jgNylrm7xncShZq8LR7q1M_yjpcQHfSSZ2uml3zCvgevWN1XmSsRjYSQ7k1g2_m61jBHLw8nQe-fR7o99cTx_bDhuP4pyp',
+  hero:         '/DSC_5392.JPG',
+  heritage:     '/gallery/Wardrobes_and_Bedroom/DSC_5356.JPG',
+  galleryLarge: '/gallery/Kitchens/DSC_5404.JPG',
+  gallerySide:  '/gallery/Wardrobes_and_Bedroom/DSC_5330.JPG',
+  galleryAccent:'/gallery/Stairs/DSC_5373.JPG',
 }
 
 export default async function HomePage() {

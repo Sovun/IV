@@ -4,6 +4,7 @@ import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { useState } from 'react'
 
 const navLinks = [
+  { href: '/',          label: 'Home' },
   { href: '/portfolio', label: 'Gallery' },
   { href: '/about',     label: 'The Master' },
   { href: '/contact',   label: 'Contact' },
