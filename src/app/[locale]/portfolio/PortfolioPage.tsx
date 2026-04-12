@@ -1,12 +1,15 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import type { GalleryCategory } from '@/lib/gallery'
-import { CATEGORY_LABELS } from '@/lib/categories'
 
 export default function PortfolioPage({ categories }: { categories: GalleryCategory[] }) {
+  const t    = useTranslations('portfolio')
+  const tCat = useTranslations('categories')
+
   const [activeKey, setActiveKey] = useState<string>(categories[0]?.key ?? '')
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
@@ -32,10 +35,10 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
       {/* Page header */}
       <div className="text-center pt-40 pb-20 px-6 bg-surface-container">
         <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-6 block">
-          Crafted in Odessa
+          {t('label')}
         </span>
         <h1 className="font-headline text-5xl md:text-6xl tracking-tight text-primary">
-          The Collection
+          {t('title')}
         </h1>
       </div>
 
@@ -56,7 +59,7 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
                 {cover && (
                   <Image
                     src={cover}
-                    alt={CATEGORY_LABELS[key as keyof typeof CATEGORY_LABELS]}
+                    alt={tCat(key as Parameters<typeof tCat>[0])}
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                     className={`object-cover transition-transform duration-700 ${
@@ -75,10 +78,10 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
                   <p className={`font-label text-[9px] uppercase tracking-[0.25em] mb-1 transition-colors duration-300 ${
                     isActive ? 'text-secondary' : 'text-on-primary/60'
                   }`}>
-                    {photos.length} pieces
+                    {t('pieces', { count: photos.length })}
                   </p>
                   <h3 className="font-headline text-on-primary text-base leading-tight">
-                    {CATEGORY_LABELS[key as keyof typeof CATEGORY_LABELS]}
+                    {tCat(key as Parameters<typeof tCat>[0])}
                   </h3>
                 </div>
               </button>
@@ -93,10 +96,10 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
           <div className="max-w-[1920px] mx-auto">
             <div className="flex items-baseline gap-6 mb-10">
               <h2 className="font-headline text-3xl text-primary">
-                {CATEGORY_LABELS[activeCategory.key as keyof typeof CATEGORY_LABELS]}
+                {tCat(activeCategory.key as Parameters<typeof tCat>[0])}
               </h2>
               <span className="font-label text-[10px] uppercase tracking-widest text-primary/40">
-                {activeCategory.photos.length} works
+                {t('works', { count: activeCategory.photos.length })}
               </span>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -108,7 +111,7 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
                 >
                   <Image
                     src={photo.src}
-                    alt={`Custom furniture by Igor Vasylkov — ${CATEGORY_LABELS[photo.category as keyof typeof CATEGORY_LABELS]}`}
+                    alt={`Custom furniture by Igor Vasylkov — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
                     width={600}
                     height={600}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

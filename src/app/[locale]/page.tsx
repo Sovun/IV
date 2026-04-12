@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getInstagramPhotos } from '@/lib/instagram'
 import Image from 'next/image'
@@ -5,14 +6,16 @@ import Image from 'next/image'
 // Fallback images from local gallery (used when Instagram token is not set)
 const STITCH = {
   hero:         '/DSC_5392.JPG',
-  heritage:     '/gallery/Wardrobes_and_Bedroom/DSC_5356.JPG',
+  heritage:     '/gallery/Interior_Decorations/DSC_5346.JPG',
   galleryLarge: '/gallery/Kitchens/DSC_5404.JPG',
   gallerySide:  '/gallery/Wardrobes_and_Bedroom/DSC_5330.JPG',
   galleryAccent:'/gallery/Stairs/DSC_5373.JPG',
 }
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   const photos = await getInstagramPhotos()
+  const t = await getTranslations({ locale, namespace: 'home' })
 
   const img = (idx: number, fallback: string) =>
     photos[idx]?.media_url || fallback
@@ -32,33 +35,32 @@ export default async function HomePage() {
             className="object-cover"
             priority
           />
-          {/* Match Stitch gradient exactly: from-background/70 via-background/30 to-transparent */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900/90 via-charcoal-900/55 to-transparent" />
         </div>
 
         <div className="container mx-auto px-12 relative z-10">
           <div className="max-w-3xl">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-6 block">
-              Est. in the Heart of Odessa
+            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary-container mb-6 block">
+              {t('hero_label')}
             </span>
-            <h1 className="text-6xl md:text-8xl font-headline tracking-tighter leading-tight text-primary mb-8">
-              The Art of <br />Bespoke Living
+            <h1 className="text-6xl md:text-8xl font-headline tracking-tighter leading-tight text-white mb-8">
+              {t('hero_title_1')} <br />{t('hero_title_2')}
             </h1>
-            <p className="text-lg md:text-xl text-primary/90 max-w-xl mb-12 leading-relaxed">
-              Where Italian precision meets the architectural soul of Ukraine. We craft more than furniture; we forge the heritage of your home.
+            <p className="text-lg md:text-xl text-white/80 max-w-xl mb-12 leading-relaxed">
+              {t('hero_description')}
             </p>
             <div className="flex items-center gap-12">
               <Link
-                href="/portfolio"
-                className="bg-primary text-on-primary px-10 py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary transition-all duration-[400ms]"
+                href="/contact"
+                className="bg-white text-charcoal-900 px-10 py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
               >
-                Begin Your Journey
+                {t('hero_cta_primary')}
               </Link>
               <Link
                 href="/portfolio"
-                className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms]"
+                className="bg-black/50 text-white px-10 py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
               >
-                Explore Collection
+                {t('hero_cta_secondary')}
               </Link>
             </div>
           </div>
@@ -86,20 +88,20 @@ export default async function HomePage() {
           {/* Text — right on desktop */}
           <div className="md:col-span-7 order-1 md:order-2">
             <h2 className="text-4xl md:text-5xl font-headline mb-12 leading-tight">
-              Heritage in Every Grain
+              {t('philosophy_title')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <p className="text-primary/70 leading-relaxed italic font-headline text-lg">
-                  "We do not believe in the temporary. Every piece that leaves our workshop is built to witness a century of family gatherings."
+                  &ldquo;{t('philosophy_quote')}&rdquo;
                 </p>
                 <span className="block font-label text-[10px] uppercase tracking-widest text-secondary">
-                  — Igor Vasylkov&apos;s Philosophy
+                  {t('philosophy_attribution')}
                 </span>
               </div>
               <div className="space-y-6">
                 <p className="text-primary/80 leading-relaxed font-body">
-                  Rooted in the rich artisan traditions of Odessa and inspired by Italian furniture design, our atelier specialises in hand-crafted joinery that defies mass-market standards. We source only sustainable hardwoods, treated with natural oils to preserve the living soul of the material.
+                  {t('philosophy_body')}
                 </p>
               </div>
             </div>
@@ -115,15 +117,15 @@ export default async function HomePage() {
           <div className="flex justify-between items-end mb-20">
             <div>
               <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">
-                Selection
+                {t('highlights_label')}
               </span>
-              <h2 className="text-4xl md:text-5xl font-headline">Curated Highlights</h2>
+              <h2 className="text-4xl md:text-5xl font-headline">{t('highlights_title')}</h2>
             </div>
             <Link
               href="/portfolio"
               className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms] hidden md:block"
             >
-              View Full Gallery
+              {t('highlights_view_all')}
             </Link>
           </div>
 
@@ -143,9 +145,9 @@ export default async function HomePage() {
               </div>
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-2xl font-headline mb-2">The Penthouse Suite</h3>
+                  <h3 className="text-2xl font-headline mb-2">{t('highlight_1_title')}</h3>
                   <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                    Muted Oak · Italian Calacatta Marble
+                    {t('highlight_1_meta')}
                   </p>
                 </div>
                 <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-[400ms]">
@@ -154,7 +156,7 @@ export default async function HomePage() {
               </div>
             </Link>
 
-            {/* Side Feature — mt-24 on mobile only, aligned top on desktop */}
+            {/* Side Feature */}
             <Link href="/portfolio" className="md:col-span-4 mt-24 md:mt-0 group cursor-pointer block">
               <div className="aspect-[3/4] bg-surface-container-low mb-8 overflow-hidden relative">
                 <Image
@@ -167,14 +169,14 @@ export default async function HomePage() {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-headline mb-2">The Heritage Closet</h3>
+                <h3 className="text-2xl font-headline mb-2">{t('highlight_2_title')}</h3>
                 <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                  Smoked Eucalyptus · Nappa Leather
+                  {t('highlight_2_meta')}
                 </p>
               </div>
             </Link>
 
-            {/* Bottom Accent — offset one column from left */}
+            {/* Bottom Accent */}
             <Link href="/portfolio" className="md:col-span-5 md:col-start-2 group cursor-pointer block">
               <div className="aspect-square bg-surface-container-low mb-8 overflow-hidden relative">
                 <Image
@@ -187,9 +189,9 @@ export default async function HomePage() {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-headline mb-2">Artisan Detail No. 42</h3>
+                <h3 className="text-2xl font-headline mb-2">{t('highlight_3_title')}</h3>
                 <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                  Hand-Cut Walnut · Natural Oil Finish
+                  {t('highlight_3_meta')}
                 </p>
               </div>
             </Link>
@@ -200,7 +202,6 @@ export default async function HomePage() {
 
       {/* ── Final CTA ────────────────────────────────── */}
       <section className="py-40 bg-surface-container-high relative overflow-hidden">
-        {/* Dot pattern — exact Stitch arbitrary value */}
         <div className="absolute inset-0 pointer-events-none opacity-5">
           <div
             className="h-full w-full"
@@ -212,20 +213,20 @@ export default async function HomePage() {
         </div>
         <div className="max-w-4xl mx-auto px-12 text-center relative z-10">
           <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-8 block">
-            Your Vision, Our Craft
+            {t('cta_label')}
           </span>
           <h2 className="text-5xl md:text-7xl font-headline mb-12 tracking-tight">
-            Let Us Build Your Legacy
+            {t('cta_title')}
           </h2>
           <p className="text-lg text-primary/70 mb-16 max-w-2xl mx-auto leading-relaxed font-body">
-            Contact our head atelier for a private consultation. We specialise in full-home interior solutions and unique standalone statements.
+            {t('cta_body')}
           </p>
-          <a
-            href="tel:+380674864629"
+          <Link
+            href="/contact"
             className="bg-primary text-on-primary px-16 py-6 text-sm font-label uppercase tracking-[0.2em] hover:bg-secondary transition-all duration-[400ms] inline-block"
           >
-            Schedule a Meeting
-          </a>
+            {t('cta_button')}
+          </Link>
         </div>
       </section>
 

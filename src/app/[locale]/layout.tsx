@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -70,7 +70,8 @@ export default async function LocaleLayout({
     notFound()
   }
 
-  const messages = await getMessages()
+  setRequestLocale(locale)
+  const messages = await getMessages({ locale })
 
   return (
     <html lang={locale === 'ua' ? 'uk' : 'en'}>

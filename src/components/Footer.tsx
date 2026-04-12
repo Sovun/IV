@@ -1,7 +1,16 @@
+import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
-export default function Footer() {
+export default async function Footer() {
+  const t  = await getTranslations('footer')
+  const tn = await getTranslations('nav')
   const year = new Date().getFullYear()
+
+  const internalLinks = [
+    { label: tn('gallery'),  href: '/portfolio' as const },
+    { label: tn('master'),   href: '/about'     as const },
+    { label: tn('contact'),  href: '/contact'   as const },
+  ]
 
   return (
     <footer className="bg-[#f0eee9] py-20 px-12">
@@ -14,9 +23,7 @@ export default function Footer() {
           </Link>
           <div className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 leading-relaxed">
             Odessa, Ukraine<br />
-            <a href="tel:+380674864629" className="hover:text-[#775a19] transition-colors duration-[400ms]">
-              +380 67 486 4629
-            </a><br />
+            <span>+380 67 486 4629</span><br />
             <a href="mailto:ive@ukr.net" className="hover:text-[#775a19] transition-colors duration-[400ms]">
               ive@ukr.net
             </a>
@@ -25,37 +32,33 @@ export default function Footer() {
 
         {/* Nav + social links */}
         <div className="flex flex-wrap gap-8 justify-center md:justify-start">
-          {[
-            { label: 'Gallery',    href: '/portfolio',                  external: false },
-            { label: 'The Master', href: '/about',                      external: false },
-            { label: 'Contact',    href: '/contact',                    external: false },
-            { label: 'Instagram',  href: 'https://instagram.com',       external: true  },
-            { label: 'Telegram',   href: 'tg://resolve?phone=380977939401', external: true },
-          ].map(({ label, href, external }) =>
-            external ? (
-              <a
-                key={label}
-                href={href}
-                className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
-              >
-                {label}
-              </a>
-            ) : (
-              <Link
-                key={label}
-                href={href as '/portfolio' | '/about' | '/contact'}
-                className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
-              >
-                {label}
-              </Link>
-            )
-          )}
+          {internalLinks.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
+            >
+              {label}
+            </Link>
+          ))}
+          <a
+            href="https://www.instagram.com/igorvasylkov/"
+            className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
+          >
+            Instagram
+          </a>
+          <a
+            href="tg://resolve?phone=380977939401"
+            className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
+          >
+            Telegram
+          </a>
         </div>
 
         {/* Copyright */}
         <div className="text-right">
           <p className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60">
-            © {year} Igor Vasylkov. Crafted in Odessa.
+            {t('copyright', { year })}
           </p>
         </div>
 

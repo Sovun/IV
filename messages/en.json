@@ -1,47 +1,57 @@
 {
   "nav": {
     "home": "Home",
-    "portfolio": "Portfolio",
-    "about": "About",
+    "gallery": "Gallery",
+    "master": "The Master",
     "contact": "Contact"
   },
   "home": {
-    "hero_title": "Custom Furniture",
-    "hero_subtitle": "Mastery in Every Detail",
-    "hero_cta": "View Portfolio",
-    "hero_contact": "Get in Touch",
-    "intro_title": "Bespoke Furniture with Soul",
-    "intro_text": "For over 20 years, Igor Vasylkov has been crafting custom furniture of any complexity in Odessa, Ukraine. Each piece is a fusion of classical craftsmanship and contemporary design, tailored to your vision and space.",
-    "featured_title": "Featured Works",
-    "faq_title": "Frequently Asked Questions",
-    "faq_1_q": "Where to order custom furniture in Odessa?",
-    "faq_1_a": "Igor Vasylkov is a master craftsman specializing in custom furniture in Odessa, Ukraine. Call +380674864629 or email ive@ukr.net.",
-    "faq_2_q": "What types of furniture do you make?",
-    "faq_2_a": "Kitchens, wardrobes, doors, staircases, tables, restaurant décor, and any custom piece designed to your specifications.",
-    "faq_3_q": "How much does custom furniture cost?",
-    "faq_3_a": "Pricing depends on project complexity and materials. Contact us for a free consultation and estimate.",
-    "cta_title": "Ready to discuss your project?",
-    "cta_text": "Call or message us — free consultation and on-site visit available.",
-    "cta_call": "Call Now",
-    "cta_telegram": "Message on Telegram"
+    "hero_label": "Est. in the Heart of Odessa",
+    "hero_title_1": "The Art of",
+    "hero_title_2": "Bespoke Living",
+    "hero_description": "Where Italian precision meets the architectural soul of Ukraine. We craft more than furniture; we forge the heritage of your home.",
+    "hero_cta_primary": "Begin Your Journey",
+    "hero_cta_secondary": "Explore Collection",
+    "philosophy_title": "Heritage in Every Grain",
+    "philosophy_quote": "We do not believe in the temporary. Every piece that leaves our workshop is built to witness a century of family gatherings.",
+    "philosophy_attribution": "— Igor Vasylkov's Philosophy",
+    "philosophy_body": "Rooted in the rich artisan traditions of Odessa and inspired by Italian furniture design, our atelier specialises in hand-crafted joinery that defies mass-market standards. We source only sustainable hardwoods, treated with natural oils to preserve the living soul of the material.",
+    "highlights_label": "Selection",
+    "highlights_title": "Curated Highlights",
+    "highlights_view_all": "View Full Gallery",
+    "highlight_1_title": "The Penthouse Suite",
+    "highlight_1_meta": "Muted Oak · Italian Calacatta Marble",
+    "highlight_2_title": "The Heritage Closet",
+    "highlight_2_meta": "Smoked Eucalyptus · Nappa Leather",
+    "highlight_3_title": "Artisan Detail No. 42",
+    "highlight_3_meta": "Hand-Cut Walnut · Natural Oil Finish",
+    "cta_label": "Your Vision, Our Craft",
+    "cta_title": "Let Us Build Your Legacy",
+    "cta_body": "Contact our head atelier for a private consultation. We specialise in full-home interior solutions and unique standalone statements.",
+    "cta_button": "Schedule a Meeting"
   },
   "portfolio": {
-    "title": "Portfolio",
-    "subtitle": "Works crafted with precision and soul",
-    "all": "All Works",
-    "kitchens": "Kitchens",
-    "wardrobes": "Wardrobes",
-    "doors": "Doors",
-    "stairs": "Stairs",
-    "tables": "Tables",
-    "restaurants": "Restaurant Décor"
+    "label": "Crafted in Odessa",
+    "title": "The Collection",
+    "pieces": "{count} pieces",
+    "works": "{count} works"
+  },
+  "categories": {
+    "Kitchens": "Kitchens",
+    "Study": "Study",
+    "Wardrobes_and_Bedroom": "Wardrobes & Bedroom",
+    "Bathroom_and_Sauna": "Bathroom & Sauna",
+    "Interior_Decorations": "Interior Decorations",
+    "Doors": "Doors",
+    "Tables": "Tables",
+    "Stairs": "Stairs"
   },
   "about": {
-    "title": "About the Craftsman",
-    "subtitle": "Igor Vasylkov — Custom Furniture Master",
-    "body": "For over two decades, Igor Vasylkov has dedicated himself to the art of bespoke furniture making. Each project is a dialogue between craftsman and client, where technical perfection meets individual vision. Igor's work can be found in private homes and restaurants across Odessa and Ukraine.",
-    "craft_title": "Approach to Craft",
-    "craft_text": "From the first sketch to final installation — every stage is personally overseen. We use quality materials, proven techniques, and original solutions for each commission.",
+    "title": "The Master",
+    "subtitle": "Igor Vasylkov — Bespoke Furniture Atelier, Est. 2002",
+    "body": "In the years following Ukrainian independence, Igor Vasylkov — a former military officer — navigated an unstable economy like so many of his generation, often working two jobs at once. He arrived at a conviction: he needed work that was truly his own. A life's work.\n\nIt began at home — designing and building the kitchen of his new apartment with his own hands. What started as necessity became a calling. In 2002, Igor founded his private atelier in Odessa, built on a single guiding principle: take only the work that demands excellence, and execute it without compromise.\n\nFor over two decades, that principle has attracted private homeowners, restaurateurs, and commercial developers across Ukraine and beyond — clients who understand that the right furniture is not purchased. It is created.",
+    "craft_title": "An Approach Forged in Complexity",
+    "craft_text": "Where others seek simplicity, we seek the commission nobody else will take. Complex, multi-element projects — full apartment interiors, restaurants, commercial spaces — are not a challenge here, they are our standard.\n\nWe work end-to-end: directly with clients to shape their vision, and alongside architects and interior designers, applying rigorous technical analysis to every proposed solution. The question we always ask: will this serve you well for decades?\n\nWe work with any wood species, any material — oak, walnut, metal, glass, seamless integration with existing structures — with equal precision. What consistently surprises our clients is what they did not expect to be possible: the individuality and warmth of bespoke craftsmanship, delivered with the consistency and precision of industrial production.\n\nFurniture built not just for today — but to be inherited.",
     "location": "Odessa, Ukraine"
   },
   "contact": {
@@ -50,11 +60,12 @@
     "phone_label": "Phone",
     "email_label": "Email",
     "telegram_label": "Telegram",
+    "hours_label": "Hours",
     "hours": "Mon–Sat: 9:00–19:00",
     "location": "Odessa, Ukraine"
   },
   "footer": {
-    "tagline": "Mastery in Every Detail",
-    "rights": "All rights reserved"
+    "crafted": "Crafted in Odessa",
+    "copyright": "© {year} Igor Vasylkov. All rights reserved."
   }
 }

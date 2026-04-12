@@ -1,7 +1,8 @@
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export default function ContactPage() {
-  const t = useTranslations('contact')
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'contact' })
 
   return (
     <div className="pt-24">
@@ -16,9 +17,9 @@ export default function ContactPage() {
           {/* Phone */}
           <div className="border-b border-cream-300 pb-10">
             <p className="font-sans text-xs tracking-widest uppercase text-gold-500 mb-3">{t('phone_label')}</p>
-            <a href="tel:+380674864629" className="font-serif text-2xl font-light text-charcoal-900 hover:text-gold-500 transition-colors">
+            <span className="font-serif text-2xl font-light text-charcoal-900 select-all">
               +380 67 486 4629
-            </a>
+            </span>
           </div>
 
           {/* Email */}
@@ -39,7 +40,7 @@ export default function ContactPage() {
 
           {/* Hours */}
           <div>
-            <p className="font-sans text-xs tracking-widest uppercase text-gold-500 mb-3">Hours</p>
+            <p className="font-sans text-xs tracking-widest uppercase text-gold-500 mb-3">{t('hours_label')}</p>
             <p className="font-serif text-xl font-light text-charcoal-900">{t('hours')}</p>
             <p className="font-sans text-sm text-charcoal-700 mt-2">{t('location')}</p>
           </div>
