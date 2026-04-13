@@ -43,8 +43,8 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
       </div>
 
       {/* Category tiles */}
-      <div className="bg-surface py-16 px-12">
-        <div className="max-w-[1920px] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="bg-surface py-10 md:py-16 px-4 md:px-12">
+        <div className="max-w-[1920px] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
           {categories.map(({ key, photos }) => {
             const cover = photos[0]?.src
             const isActive = key === activeKey
@@ -92,9 +92,9 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
 
       {/* Photo grid for selected category */}
       {activeCategory && (
-        <div className="bg-surface-container py-16 px-12">
+        <div className="bg-surface-container py-10 md:py-16 px-4 md:px-12">
           <div className="max-w-[1920px] mx-auto">
-            <div className="flex items-baseline gap-6 mb-10">
+            <div className="flex items-baseline gap-4 mb-8 md:mb-10">
               <h2 className="font-headline text-3xl text-primary">
                 {tCat(activeCategory.key as Parameters<typeof tCat>[0])}
               </h2>
