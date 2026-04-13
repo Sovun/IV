@@ -52,13 +52,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="flex items-center gap-4 md:gap-12">
               <Link
                 href="/contact"
-                className="bg-white text-charcoal-900 px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
+                className="flex-1 md:flex-none text-center bg-white text-charcoal-900 px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
               >
                 {t('hero_cta_primary')}
               </Link>
               <Link
                 href="/portfolio"
-                className="bg-black/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
+                className="flex-1 md:flex-none text-center bg-black/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
               >
                 {t('hero_cta_secondary')}
               </Link>
