@@ -75,7 +75,7 @@ export default function Header() {
 
       {/* Mobile drawer */}
       {open && (
-        <div className="md:hidden bg-[#fbf9f4] px-12 pt-8 pb-8 flex flex-col gap-6 border-t border-[#d1c4b9]/30">
+        <div className="md:hidden bg-[#fbf9f4] px-12 pt-8 pb-8 flex flex-col gap-6 border-t border-b border-[#d1c4b9]/60 shadow-md">
           {navLinks.map(link => (
             <Link
               key={link.href}
