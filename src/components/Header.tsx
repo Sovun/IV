@@ -82,13 +82,13 @@ export default function Header() {
 
       {/* Mobile drawer */}
       <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out border-[#d1c4b9]/60 shadow-md ${open ? 'max-h-80 border-t border-b' : 'max-h-0'}`}>
-        <div className={`bg-[#fbf9f4] px-12 flex flex-col gap-6 transition-all duration-300 ${open ? (scrolled ? 'pt-5 pb-5' : 'pt-8 pb-8') : 'pt-0 pb-0'}`}>
+        <div className={`bg-[#fbf9f4] flex flex-col transition-all duration-300 ${open ? (scrolled ? 'pt-2 pb-2' : 'pt-4 pb-4') : 'pt-0 pb-0'}`}>
           {navLinks.map(link => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-headline text-sm tracking-widest uppercase text-[#5f5e5e] hover:text-[#775a19] transition-colors duration-[400ms]"
+              className="block w-full px-12 py-3 font-headline text-sm tracking-widest uppercase text-[#5f5e5e] hover:text-[#775a19] transition-colors duration-[400ms]"
             >
               {link.label}
             </Link>
