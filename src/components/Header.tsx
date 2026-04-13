@@ -1,14 +1,21 @@
 'use client'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Header() {
   const locale   = useLocale()
   const pathname = usePathname()
   const router   = useRouter()
   const t        = useTranslations('nav')
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]       = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const navLinks = [
     { href: '/',          label: t('home') },
@@ -21,13 +28,13 @@ export default function Header() {
     router.replace(pathname, { locale: locale === 'ua' ? 'en' : 'ua' })
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 backdrop-blur-md">
-      <nav className="flex justify-between items-center px-12 py-8 max-w-[1920px] mx-auto">
+    <header className="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 backdrop-blur-md transition-all duration-500">
+      <nav className={`flex justify-between items-center px-12 max-w-[1920px] mx-auto transition-all duration-500 ${scrolled ? 'py-4' : 'py-8'}`}>
 
         {/* Wordmark */}
         <Link
           href="/"
-          className="text-2xl font-headline tracking-widest text-[#5f5e5e] uppercase hover:text-[#775a19] transition-colors duration-[400ms]"
+          className={`font-headline tracking-widest text-[#5f5e5e] uppercase hover:text-[#775a19] transition-all duration-500 ${scrolled ? 'text-lg' : 'text-2xl'}`}
         >
           Igor Vasylkov
         </Link>
@@ -74,8 +81,8 @@ export default function Header() {
       </nav>
 
       {/* Mobile drawer */}
-      {open && (
-        <div className="md:hidden bg-[#fbf9f4] px-12 pt-8 pb-8 flex flex-col gap-6 border-t border-b border-[#d1c4b9]/60 shadow-md">
+      <div className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out border-[#d1c4b9]/60 shadow-md ${open ? 'max-h-80 border-t border-b' : 'max-h-0'}`}>
+        <div className={`bg-[#fbf9f4] px-12 flex flex-col gap-6 transition-all duration-500 ${open ? (scrolled ? 'pt-5 pb-5' : 'pt-8 pb-8') : 'pt-0 pb-0'}`}>
           {navLinks.map(link => (
             <Link
               key={link.href}
@@ -87,7 +94,7 @@ export default function Header() {
             </Link>
           ))}
         </div>
-      )}
+      </div>
     </header>
   )
 }
