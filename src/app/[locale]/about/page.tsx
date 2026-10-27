@@ -45,21 +45,20 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </div>
 
       <div className="max-w-3xl mx-auto px-4 md:px-6 py-10 md:py-16">
-        <div className="mb-12 space-y-5">
+        <div className="mb-16 space-y-6">
           {bodyParagraphs.map((para, i) => (
-            <p key={i} className="font-body text-primary/80 text-sm leading-relaxed">{para}</p>
+            <p key={i} className="font-body text-primary/80 text-base leading-relaxed">{para}</p>
           ))}
         </div>
 
-        <h2 className="font-headline text-2xl mb-2">{t('craft_title')}</h2>
-        <div className="w-10 h-px bg-secondary mb-6" />
-        <div className="mb-12 space-y-5">
+        <h2 className="font-headline text-2xl mb-8">{t('craft_title')}</h2>
+        <div className="mb-16 space-y-6">
           {craftParagraphs.map((para, i) => (
-            <p key={i} className="font-body text-primary/80 text-sm leading-relaxed">{para}</p>
+            <p key={i} className="font-body text-primary/80 text-base leading-relaxed">{para}</p>
           ))}
         </div>
 
-        <div className="border-t border-outline-variant pt-8">
+        <div className="mt-4 pt-10">
           <p className="font-label text-[10px] uppercase tracking-widest text-secondary">{t('location')}</p>
         </div>
       </div>

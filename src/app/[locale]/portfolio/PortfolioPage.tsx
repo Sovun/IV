@@ -53,7 +53,7 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
                 key={key}
                 onClick={() => setActiveKey(key)}
                 className={`group relative aspect-[3/4] overflow-hidden text-left transition-all duration-500 ${
-                  isActive ? 'ring-2 ring-secondary ring-offset-2 ring-offset-surface' : ''
+                  isActive ? 'scale-[1.02]' : 'opacity-80 hover:opacity-100'
                 }`}
               >
                 {cover && (

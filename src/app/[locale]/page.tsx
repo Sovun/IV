@@ -58,7 +58,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </Link>
               <Link
                 href="/portfolio"
-                className="flex-1 md:flex-none text-center bg-black/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
+                className="flex-1 md:flex-none text-center border border-white/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:border-secondary hover:bg-secondary hover:text-white transition-all duration-[400ms]"
               >
                 {t('hero_cta_secondary')}
               </Link>
@@ -211,17 +211,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ── Final CTA ────────────────────────────────── */}
-      <section className="py-20 md:py-40 bg-surface-container-high relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-5">
-          <div
-            className="h-full w-full"
-            style={{
-              backgroundImage: 'radial-gradient(#5f5e5e 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-        </div>
-        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10">
+      <section className="py-24 md:py-48 bg-surface-container-high">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
           <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-8 block">
             {t('cta_label')}
           </span>

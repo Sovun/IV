@@ -53,7 +53,7 @@ export default function Header() {
           {/* Language switcher */}
           <button
             onClick={switchLocale}
-            className="text-[#5f5e5e] hover:text-[#775a19] transition-colors duration-[400ms] border border-[#d1c4b9] px-3 py-1.5 font-label tracking-widest text-xs"
+            className="text-[#5f5e5e] hover:text-[#775a19] transition-colors duration-[400ms] px-3 py-1.5 font-label tracking-widest text-xs bg-surface-container-high hover:bg-surface-container-highest"
           >
             {locale === 'ua' ? 'EN' : 'UA'}
           </button>
@@ -81,7 +81,7 @@ export default function Header() {
       </nav>
 
       {/* Mobile drawer */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out border-[#d1c4b9]/60 shadow-md ${open ? 'max-h-80 border-t border-b' : 'max-h-0'}`}>
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${open ? 'max-h-80 shadow-sm' : 'max-h-0'}`}>
         <div className={`bg-[#fbf9f4] flex flex-col transition-all duration-300 ${open ? (scrolled ? 'pt-2 pb-2' : 'pt-4 pb-4') : 'pt-0 pb-0'}`}>
           {navLinks.map(link => (
             <Link

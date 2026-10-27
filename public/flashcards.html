@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Флешкарти</title>
+  <style>
+    :root {
+      --bg: #F2EFE9;
+      --surface: #FFFFFF;
+      --text: #1C1B18;
+      --muted: #7A7469;
+      --border: #DDD9D2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 28px 14px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    header h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+    header span { font-size: 13px; color: var(--muted); }
+
+    /* ── Category nav ── */
+    .cat-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      color: var(--muted);
+      border-bottom: 2.5px solid transparent;
+      transition: all 0.15s;
+    }
+    .cat-btn:hover { color: var(--text); }
+    .cat-btn.active { color: var(--text); border-bottom-color: var(--active-color); }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 24px;
+    }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .progress-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.35s ease;
+    }
+
+    /* ── Card scene ── */
+    .card-scene {
+      width: 100%;
+      max-width: 600px;
+      height: 360px;
+      perspective: 1400px;
+      cursor: pointer;
+      margin-bottom: 24px;
+      user-select: none;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-inner.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    /* Front */
+    .card-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 48px;
+      color: rgba(255,255,255,0.95);
+    }
+    .card-front .cat-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 18px;
+    }
+    .card-front .main-term {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 10px;
+    }
+    .card-front .sub-term {
+      font-size: 15px;
+      opacity: 0.65;
+      font-weight: 400;
+    }
+    .card-front .tap-hint {
+      position: absolute;
+      bottom: 18px;
+      font-size: 11px;
+      opacity: 0.45;
+      letter-spacing: 0.3px;
+    }
+    .card-front .card-num {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 12px;
+      opacity: 0.45;
+      font-weight: 600;
+    }
+    .known-star {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .known-star.visible { opacity: 1; }
+
+    /* Back */
+    .card-back {
+      background: var(--surface);
+      transform: rotateY(180deg);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .back-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .back-term { font-size: 19px; font-weight: 700; }
+
+    .def-block { margin-bottom: 14px; }
+    .def-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .def-text {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #2a2a2a;
+    }
+
+    .example-block {
+      background: #F5F2EE;
+      border-radius: 10px;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      border-left: 3px solid transparent;
+    }
+    .example-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .example-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #3a3a3a;
+    }
+
+    .course-note {
+      margin-top: auto;
+      padding: 8px 12px;
+      background: #EEF3FF;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #4A5A88;
+      flex-shrink: 0;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .nav-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .nav-btn:hover:not(:disabled) { background: #ebe8e2; transform: scale(1.06); }
+    .nav-btn:active:not(:disabled) { transform: scale(0.96); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .flip-btn {
+      height: 46px;
+      padding: 0 28px;
+      border-radius: 23px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .flip-btn:hover { background: #ebe8e2; }
+
+    /* ── Dots ── */
+    .dots-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .dot.active { width: 22px; border-radius: 4px; }
+    .dot.known { opacity: 0.25; }
+
+    /* ── Bottom toolbar ── */
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .tool-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 16px;
+      border-radius: 9px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--muted);
+    }
+    .tool-btn:hover { background: #ebe8e2; color: var(--text); }
+    .tool-btn.on { background: #E8F5E9; border-color: #81C784; color: #2E7D32; }
+    .tool-btn.reset-btn:hover { background: #FFF3F3; border-color: #EF9A9A; color: #C62828; }
+
+    /* ── KB hints ── */
+    .kb-hints {
+      display: flex;
+      gap: 16px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    kbd {
+      background: var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: inherit;
+      font-size: 10.5px;
+    }
+
+    /* ── Stats footer ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+    }
+    .stat { text-align: center; }
+    .stat-n { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+    .stat-l { font-size: 11px; color: var(--muted); font-weight: 500; margin-top: 1px; }
+
+    /* ── Completion overlay ── */
+    .complete {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+    }
+    .complete.show { display: flex; }
+    .complete-emoji { font-size: 56px; margin-bottom: 16px; }
+    .complete h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .complete p { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+    .complete-restart {
+      padding: 14px 36px;
+      border-radius: 14px;
+      border: none;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+    }
+
+    /* slide transition */
+    .card-scene.slide-out-left .card-inner  { animation: slideOutL 0.22s ease forwards; }
+    .card-scene.slide-out-right .card-inner { animation: slideOutR 0.22s ease forwards; }
+    .card-scene.slide-in-left .card-inner   { animation: slideInL 0.22s ease forwards; }
+    .card-scene.slide-in-right .card-inner  { animation: slideInR 0.22s ease forwards; }
+
+    @keyframes slideOutL { to { opacity:0; transform: translateX(-40px) rotateY(0); } }
+    @keyframes slideOutR { to { opacity:0; transform: translateX(40px) rotateY(0); } }
+    @keyframes slideInL  { from { opacity:0; transform: translateX(-40px); } to { opacity:1; transform: translateX(0); } }
+    @keyframes slideInR  { from { opacity:0; transform: translateX(40px); }  to { opacity:1; transform: translateX(0); } }
+
+    @media (max-width: 500px) {
+      .card-scene { height: 300px; }
+      .card-front .main-term { font-size: 28px; }
+      footer { gap: 20px; }
+      .kb-hints { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>AI Флешкарти</h1>
+  <span>Вивчи ключові поняття курсу</span>
+</header>
+
+<nav class="cat-nav" id="catNav"></nav>
+
+<main id="main">
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span id="progressText"></span>
+      <span id="knownCount"></span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="card-scene" id="cardScene" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-front" id="cardFront">
+        <div class="known-star" id="knownStar">★</div>
+        <div class="card-num" id="cardNum"></div>
+        <div class="cat-tag" id="frontCat"></div>
+        <div class="main-term" id="frontTerm"></div>
+        <div class="sub-term" id="frontSub"></div>
+        <div class="tap-hint">Клікни щоб перевернути</div>
+      </div>
+      <div class="card-face card-back" id="cardBack">
+        <div class="back-header">
+          <div class="back-dot" id="backDot"></div>
+          <div class="back-term" id="backTerm"></div>
+        </div>
+        <div class="def-block">
+          <div class="def-label">Що це</div>
+          <div class="def-text" id="backDef"></div>
+        </div>
+        <div class="example-block" id="exampleBlock">
+          <div class="example-label">Приклад</div>
+          <div class="example-text" id="backExample"></div>
+        </div>
+        <div class="course-note" id="courseNote" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" title="← Назад">←</button>
+    <button class="flip-btn" onclick="flipCard()">Перевернути</button>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)" title="→ Вперед">→</button>
+  </div>
+
+  <!-- Dots -->
+  <div class="dots-row" id="dotsRow"></div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="tool-btn" id="knownBtn" onclick="toggleKnown()">☆ Знаю</button>
+    <button class="tool-btn" id="shuffleBtn" onclick="toggleShuffle()">⇄ Перемішати</button>
+    <button class="tool-btn reset-btn" onclick="resetAll()">↺ Скинути</button>
+  </div>
+
+  <!-- KB hints -->
+  <div class="kb-hints">
+    <span><kbd>пробіл</kbd> перевернути</span>
+    <span><kbd>→</kbd> наступна</span>
+    <span><kbd>←</kbd> попередня</span>
+    <span><kbd>K</kbd> знаю</span>
+  </div>
+
+  <!-- Completion screen -->
+  <div class="complete" id="completeScreen">
+    <div class="complete-emoji">🎉</div>
+    <h2>Всі картки пройдено!</h2>
+    <p id="completeMsg"></p>
+    <button class="complete-restart" id="restartBtn" onclick="restartDeck()">Пройти знову</button>
+  </div>
+</main>
+
+<footer>
+  <div class="stat">
+    <div class="stat-n" id="statTotal">0</div>
+    <div class="stat-l">Всього</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n" id="statSeen" style="color:#5A75B0">0</div>
+    <div class="stat-l">Переглянуто</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n" id="statKnown" style="color:#4CAF50">0</div>
+    <div class="stat-l">Знаю</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n" id="statLeft" style="color:#E57C2E">0</div>
+    <div class="stat-l">Залишилось</div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  { name: "Базові поняття про АІ", color: "#8E9B2F" },
+  { name: "Чат vs Агент",          color: "#8A70B5" },
+  { name: "Інтерфейси Claude",     color: "#3E9498" },
+  { name: "Cowork vs Code",        color: "#7460A8" },
+  { name: "Інструменти інтеграції",color: "#9A7448" },
+  { name: "Підходи до роботи з AI",color: "#9E8A38" },
+  { name: "Розробницький мінімум", color: "#5472A8" },
+];
+
+const CARDS = [
+  // ── 0: Базові поняття про АІ ─────────────────────────────────────
+  {
+    cat: 0,
+    term: "LLM",
+    sub: "Large Language Model",
+    def: "Статистична машина, яка передбачає найімовірніший наступний токен у тексті. Не «розуміє» — вгадує.",
+    example: "«Сонце сходить на ...» → найімовірніше «сході».",
+  },
+  {
+    cat: 0,
+    term: "Токен",
+    sub: "Token",
+    def: "Шматочок тексту, з якого модель будує відповідь. Може бути слово, частина слова або один символ.",
+    example: "Англ. «hello» = 1 токен. Укр. «привіт» ≈ 3 токени. Українська «коштує» в 2–4 рази дорожче — тому швидше з'їдає контекстне вікно.",
+  },
+  {
+    cat: 0,
+    term: "Контекстне вікно",
+    sub: "Context window",
+    def: "Обмежена «оперативна пам'ять» моделі на один діалог. Усе всередині вікна модель бачить; що не влізло — не існує для неї.",
+    example: "Довгий чат починає «забувати» першу половину; PDF на 500 сторінок — частина просто не побачена.",
+  },
+  {
+    cat: 0,
+    term: "Промпт",
+    sub: "Prompt",
+    def: "Ваше повідомлення моделі. Може бути одне речення або кілька абзаців з контекстом, задачею і обмеженнями.",
+    example: "«Сформулюй коротке summary цього листа на 3 пункти».",
+  },
+
+  // ── 1: Чат vs Агент ──────────────────────────────────────────────
+  {
+    cat: 1,
+    term: "Чат",
+    sub: "Chat",
+    def: "Одне повідомлення → одна відповідь. Без дій у файлах чи в інтернеті — лише текст у відповідь.",
+    example: "claude.ai «допоможи переформулювати лист» — отримуєте текст.",
+    course: "В курсі: M1 Part 1, далі скрізь як точка порівняння.",
+  },
+  {
+    cat: 1,
+    term: "Агент",
+    sub: "Agent",
+    def: "Модель + цикл «думаю → викликаю інструмент → дивлюся результат → знову думаю» поки не досягне мети. Робить кроки сама.",
+    example: "«Знайди в інтернеті останні новини про X і збережи саммарі у файл» — агент сам шукає, читає, пише.",
+    course: "В курсі: M1 показуємо, M2 розбираємо цикл, далі скрізь.",
+  },
+  {
+    cat: 1,
+    term: "Агентний цикл",
+    sub: "Agent loop",
+    def: "Сама петля: think → tool call → observe → repeat. Це і є те, що робить агента агентом.",
+    example: "Live-demo в Cowork — даємо задачу «дослідити X», бачимо як іде по сайтах і повертається з відповіддю.",
+  },
+
+  // ── 2: Інтерфейси Claude ─────────────────────────────────────────
+  {
+    cat: 2,
+    term: "Claude Chat",
+    sub: "claude.ai",
+    def: "claude.ai у браузері. Діалог + Projects + Artifacts. Для разових задач і формулювань.",
+    example: "Переформулювати лист, проаналізувати фрагмент тексту, brainstorm.",
+  },
+  {
+    cat: 2,
+    term: "Claude Cowork",
+    sub: "Cowork",
+    def: "Робоче середовище Claude з конекторами до зовнішніх сервісів (Gmail, Docs, Sheets, Miro, Jira...). Агент діє через ці інтеграції.",
+    example: "«Знайди в моїх листах усі запити від клієнтів за тиждень і зведи в таблицю» — Cowork сам ходить у Gmail.",
+  },
+  {
+    cat: 2,
+    term: "Claude Code",
+    sub: "Code",
+    def: "Агент з доступом до файлової системи і командного рядку. Будує артефакти — скрипти, додатки, документи. Є desktop-аналог і CLI.",
+    example: "«Збери з нуля Google Sheet з погодою по столицях ЄС» — Claude Code викликає gws, формує таблицю.",
+  },
+
+  // ── 3: Cowork vs Code ────────────────────────────────────────────
+  {
+    cat: 3,
+    term: "Cowork vs Code",
+    sub: "",
+    def: "Cowork — для роботи з зовнішніми сервісами через конектори (Gmail / Docs / Sheets / Miro / Jira). Code — для побудови артефактів, має доступ до диска і CLI.",
+    example: "«Витягнути / змінити дані в Google» → Cowork. «Побудувати щось своє» → Code.",
+  },
+
+  // ── 4: Інструменти інтеграції ────────────────────────────────────
+  {
+    cat: 4,
+    term: "Конектор",
+    sub: "Connector / Plugin",
+    def: "Готова інтеграція Cowork з зовнішнім сервісом. Дає агенту «руки» в чужу систему.",
+    example: "Gmail-конектор → агент може шукати, читати, відповідати у вашій пошті.",
+  },
+  {
+    cat: 4,
+    term: "Skill",
+    sub: "Скіл",
+    def: "Перевикористовуваний шматок інструкцій для Claude Code, який можна викликати на будь-якому проєкті. Як міні-програма, але описана словами.",
+    example: "skill «convert CSV row to JSON» — викликаєте на будь-яких файлах, отримуєте трансформацію.",
+  },
+  {
+    cat: 4,
+    term: "MCP",
+    sub: "Model Context Protocol",
+    def: "Спільна мова, якою агент розмовляє з зовнішніми інструментами. За кожним конектором стоїть MCP-сервер.",
+    example: "Технічна деталь — знати на рівні «це механізм, як конектори насправді працюють».",
+  },
+  {
+    cat: 4,
+    term: "CLI",
+    sub: "Command-Line Interface",
+    def: "Текстовий інтерфейс для взаємодії з комп'ютером або програмою через введення команд. На відміну від GUI, де клікаєш мишкою — тут пишеш текстом.",
+    example: "Термінал / iTerm на macOS. PowerShell / CMD на Windows.",
+  },
+  {
+    cat: 4,
+    term: "gws CLI",
+    sub: "Google Workspace CLI",
+    def: "Інструмент командного рядку для роботи з Google Workspace (Docs, Sheets, Gmail, Drive). Альтернатива конекторам Cowork — через CLI.",
+    example: "gws sheets read --spreadsheetId ID --range 'Sheet1!A1:D10'",
+  },
+
+  // ── 5: Підходи до роботи з AI ────────────────────────────────────
+  {
+    cat: 5,
+    term: "Vibe coding",
+    sub: "Вайб",
+    def: "«Одним промптом отримати працюючу штуку». Без специфікації, документів рішень (ADR), специфікацій і ретроспективи. Швидко для прототипу.",
+    example: "«Збери мені web-апу з картками, де я тренуюсь у термінах AI» — за 25 хвилин маємо щось працююче.",
+  },
+  {
+    cat: 5,
+    term: "Engineering",
+    sub: "Інженерний підхід",
+    def: "spec → test → impl → review → retro. З документами рішень (ADR), специфікаціями і ретроспективами. Повільніше за vibe, але проект живе далі.",
+    example: "docs/requirements/feature-002-github-card.md — «коли користувач відкриває dashboard, бачить картку з останнім commit-ом репо».",
+  },
+  {
+    cat: 5,
+    term: "Спека",
+    sub: "Spec / Specification",
+    def: "Документ-опис фічі натуральною мовою з критеріями приймання. Пишемо ПЕРЕД кодом.",
+    example: "docs/requirements/feature-002-github-card.md — «коли користувач відкриває дашборд, бачить картку з останнім commit-ом репо».",
+  },
+  {
+    cat: 5,
+    term: "ADR",
+    sub: "Architecture Decision Record",
+    def: "Документ «чому ми обрали таку архітектуру». Контекст → рішення → наслідки.",
+    example: "docs/decisions/002-data-source-github-api.md — «беремо GitHub API замість парсингу HTML, бо...».",
+  },
+  {
+    cat: 5,
+    term: "Ретроспектива",
+    sub: "Retrospective",
+    def: "Короткий запис після фічі: що працювало, що ні, що змінити в процесі.",
+    example: "Після кожної фічі в спільному проєкті курсу.",
+  },
+
+  // ── 6: Розробницький мінімум ─────────────────────────────────────
+  {
+    cat: 6,
+    term: "Репозиторій",
+    sub: "Repository / Repo",
+    def: "Папка проєкту під версійним контролем. Зазвичай живе на GitHub.",
+    example: "github.com/<вас>/my-finance-helper — папка вашого особистого проєкту курсу.",
+  },
+  {
+    cat: 6,
+    term: "Коміт",
+    sub: "Commit",
+    def: "Зафіксована зміна з повідомленням. Знімок «ось як виглядав код у цей момент».",
+    example: "feat: add GitHub card component",
+  },
+  {
+    cat: 6,
+    term: "Scaffold",
+    sub: "Каркас проєкту",
+    def: "Стартова структура файлів і конвенцій. Boilerplate генерує scaffold.",
+    example: "Після boilerplate-webapp ви маєте CLAUDE.md, docs/, app/, package.json — це і є scaffold.",
+  },
+  {
+    cat: 6,
+    term: "MVP",
+    sub: "Minimum Viable Product",
+    def: "Найменше з того, що вже корисне для одного користувача. Не «прототип» і не «фінал».",
+    example: "Course-dashboard з 5 картками і AI-аналізом — вже MVP. Складна аналітика — за межами.",
+  },
+  {
+    cat: 6,
+    term: "Vercel",
+    sub: "Хостинг",
+    def: "Безкоштовний хостинг для веб-додатків. Деплоє через CLI або з посилання на GitHub-репо.",
+    example: "vibe-ana стає доступна за посиланням https://my-vibe-app.vercel.app",
+  },
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let activeCat   = -1;   // -1 = all
+let deck        = [];   // indices into CARDS
+let deckIndex   = 0;
+let isFlipped   = false;
+let isShuffle   = false;
+let knownSet    = new Set();
+let seenSet     = new Set();
+
+function buildDeck() {
+  deck = CARDS
+    .map((_, i) => i)
+    .filter(i => activeCat === -1 || CARDS[i].cat === activeCat);
+  if (isShuffle) shuffle(deck);
+  deckIndex = 0;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function render() {
+  const totalInDeck = deck.length;
+  if (totalInDeck === 0) return;
+
+  const cardIdx = deck[deckIndex];
+  const card    = CARDS[cardIdx];
+  const cat     = CATEGORIES[card.cat];
+  const color   = cat.color;
+
+  // Front
+  document.getElementById('cardFront').style.background = color;
+  document.getElementById('frontCat').textContent   = cat.name;
+  document.getElementById('frontTerm').textContent  = card.term;
+  document.getElementById('frontSub').textContent   = card.sub;
+  document.getElementById('cardNum').textContent    = `${deckIndex + 1} / ${totalInDeck}`;
+
+  const star = document.getElementById('knownStar');
+  star.classList.toggle('visible', knownSet.has(cardIdx));
+
+  // Back
+  document.getElementById('backDot').style.background = color;
+  document.getElementById('backTerm').textContent = card.sub ? `${card.term} · ${card.sub}` : card.term;
+  document.getElementById('backDef').textContent  = card.def;
+
+  const exBlock = document.getElementById('exampleBlock');
+  exBlock.style.borderLeftColor = color;
+  if (card.example) {
+    document.getElementById('backExample').textContent = card.example;
+    exBlock.style.display = 'block';
+  } else {
+    exBlock.style.display = 'none';
+  }
+
+  const noteEl = document.getElementById('courseNote');
+  if (card.course) {
+    noteEl.textContent = card.course;
+    noteEl.style.display = 'block';
+  } else {
+    noteEl.style.display = 'none';
+  }
+
+  // Flip state
+  const inner = document.getElementById('cardInner');
+  inner.classList.toggle('flipped', isFlipped);
+
+  // Buttons
+  document.getElementById('prevBtn').disabled = deckIndex === 0;
+  document.getElementById('nextBtn').disabled = deckIndex === totalInDeck - 1;
+
+  // Progress
+  const seen = deck.slice(0, deckIndex + 1).filter(i => seenSet.has(i)).length + (seenSet.has(cardIdx) ? 0 : 1);
+  const totalSeen = seenSet.size + (seenSet.has(cardIdx) ? 0 : 1);
+  document.getElementById('progressText').textContent = `Картка ${deckIndex + 1} з ${totalInDeck}`;
+  const knownInDeck = deck.filter(i => knownSet.has(i)).length;
+  document.getElementById('knownCount').textContent = knownInDeck > 0 ? `Знаю: ${knownInDeck}` : '';
+  document.getElementById('progressFill').style.width  = `${((deckIndex + 1) / totalInDeck) * 100}%`;
+  document.getElementById('progressFill').style.background = color;
+
+  // Dots
+  renderDots(totalInDeck, color);
+
+  // Known btn
+  const kb = document.getElementById('knownBtn');
+  if (knownSet.has(cardIdx)) {
+    kb.textContent = '★ Знаю';
+    kb.classList.add('on');
+  } else {
+    kb.textContent = '☆ Знаю';
+    kb.classList.remove('on');
+  }
+
+  // Stats
+  updateStats();
+
+  // mark as seen
+  seenSet.add(cardIdx);
+}
+
+function renderDots(total, color) {
+  const row = document.getElementById('dotsRow');
+  const MAX_DOTS = 30;
+  if (total > MAX_DOTS) { row.innerHTML = ''; return; }
+  row.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === deckIndex ? ' active' : '') + (knownSet.has(deck[i]) ? ' known' : '');
+    if (i === deckIndex) d.style.background = color;
+    d.onclick = () => jumpTo(i);
+    row.appendChild(d);
+  }
+}
+
+function updateStats() {
+  const total = CARDS.length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statSeen').textContent  = seenSet.size;
+  document.getElementById('statKnown').textContent = knownSet.size;
+  document.getElementById('statLeft').textContent  = total - knownSet.size;
+}
+
+// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('cardInner').classList.toggle('flipped', isFlipped);
+}
+
+function navigate(dir) {
+  const newIdx = deckIndex + dir;
+  if (newIdx < 0 || newIdx >= deck.length) return;
+
+  const scene = document.getElementById('cardScene');
+  const outClass = dir > 0 ? 'slide-out-left' : 'slide-out-right';
+  const inClass  = dir > 0 ? 'slide-in-right' : 'slide-in-left';
+
+  scene.classList.add(outClass);
+  setTimeout(() => {
+    scene.classList.remove(outClass);
+    deckIndex = newIdx;
+    isFlipped = false;
+    render();
+    scene.classList.add(inClass);
+    setTimeout(() => scene.classList.remove(inClass), 240);
+  }, 200);
+}
+
+function jumpTo(i) {
+  deckIndex = i;
+  isFlipped = false;
+  render();
+}
+
+function toggleKnown() {
+  const cardIdx = deck[deckIndex];
+  if (knownSet.has(cardIdx)) knownSet.delete(cardIdx);
+  else knownSet.add(cardIdx);
+  render();
+}
+
+function toggleShuffle() {
+  isShuffle = !isShuffle;
+  const btn = document.getElementById('shuffleBtn');
+  btn.classList.toggle('on', isShuffle);
+  btn.textContent = isShuffle ? '⇄ Перемішано' : '⇄ Перемішати';
+  buildDeck();
+  isFlipped = false;
+  render();
+}
+
+function resetAll() {
+  knownSet.clear();
+  seenSet.clear();
+  buildDeck();
+  isFlipped = false;
+  document.getElementById('completeScreen').classList.remove('show');
+  document.querySelector('main > *:not(#completeScreen)') && setMainVisible(true);
+  render();
+}
+
+function restartDeck() {
+  buildDeck();
+  isFlipped = false;
+  document.getElementById('completeScreen').classList.remove('show');
+  setMainVisible(true);
+  render();
+}
+
+function setMainVisible(visible) {
+  ['progress-wrap','card-scene','controls','dots-row','toolbar','kb-hints'].forEach(id => {
+    const el = document.getElementById(id) || document.querySelector('.' + id);
+    // skip — just use complete screen overlay approach
+  });
+}
+
+// ─── CATEGORY NAV ────────────────────────────────────────────────────────────
+function buildCatNav() {
+  const nav = document.getElementById('catNav');
+  nav.innerHTML = '';
+
+  const all = document.createElement('button');
+  all.className = 'cat-btn active';
+  all.textContent = 'Всі картки';
+  all.style.setProperty('--active-color', '#444');
+  all.dataset.cat = -1;
+  all.onclick = () => selectCat(-1, all, '#444');
+  nav.appendChild(all);
+
+  CATEGORIES.forEach((cat, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.textContent = cat.name;
+    btn.dataset.cat = i;
+    btn.onclick = () => selectCat(i, btn, cat.color);
+    nav.appendChild(btn);
+  });
+}
+
+function selectCat(catIdx, btn, color) {
+  activeCat = catIdx;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.documentElement.style.setProperty('--active-color', color);
+  buildDeck();
+  isFlipped = false;
+  document.getElementById('completeScreen').classList.remove('show');
+  render();
+}
+
+// ─── KEYBOARD ────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+  else if (e.key === 'ArrowRight' || e.key === 'l') navigate(1);
+  else if (e.key === 'ArrowLeft'  || e.key === 'h') navigate(-1);
+  else if (e.key === 'k' || e.key === 'K') toggleKnown();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+buildCatNav();
+buildDeck();
+render();
+</script>
+</body>
+</html>
