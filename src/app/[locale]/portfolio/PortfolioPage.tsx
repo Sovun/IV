@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
@@ -13,7 +13,8 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
   const [activeKey, setActiveKey] = useState<string>(categories[0]?.key ?? '')
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
-  const activeCategory = categories.find(c => c.key === activeKey)
+  // Fall back to the first category if the active one is missing (e.g. locale switch)
+  const activeCategory = categories.find(c => c.key === activeKey) ?? categories[0]
   const slides = (activeCategory?.photos ?? []).map(p => ({
     src: p.src,
     width: 2000,
@@ -21,13 +22,6 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
   }))
 
   const openLightbox = useCallback((idx: number) => setLightboxIndex(idx), [])
-
-  // Reset to first category if it changes (e.g. locale switch)
-  useEffect(() => {
-    if (categories.length && !categories.find(c => c.key === activeKey)) {
-      setActiveKey(categories[0].key)
-    }
-  }, [categories, activeKey])
 
   return (
     <div className="bg-surface text-primary min-h-screen">
@@ -47,7 +41,7 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
         <div className="max-w-[1920px] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
           {categories.map(({ key, photos }) => {
             const cover = photos[0]?.src
-            const isActive = key === activeKey
+            const isActive = key === activeCategory?.key
             return (
               <button
                 key={key}
