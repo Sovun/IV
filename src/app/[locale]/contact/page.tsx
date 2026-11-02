@@ -1,8 +1,11 @@
 import { getTranslations } from 'next-intl/server'
+import { getGalleryPhotos } from '@/lib/gallery'
+import ProjectBrief from './ProjectBrief'
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'contact' })
+  const covers = getGalleryPhotos().map(({ key, photos }) => ({ key, src: photos[0].src }))
 
   return (
     <div className="bg-surface text-primary">
@@ -13,13 +16,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         <h1 className="font-headline text-4xl md:text-6xl leading-tight">{t('title')}</h1>
       </div>
 
+      <ProjectBrief covers={covers} />
+
       {/* Phone */}
       <div className="py-16 md:py-20 px-6 md:px-16 bg-surface">
         <div className="max-w-3xl mx-auto">
           <p className="font-label text-[10px] uppercase tracking-widest text-secondary mb-5">{t('phone_label')}</p>
-          <span className="font-headline text-3xl md:text-5xl select-all block">
+          <a href="tel:+380674864629" className="font-headline text-3xl md:text-5xl hover:text-secondary transition-colors duration-[400ms] block">
             +380 67 486 4629
-          </span>
+          </a>
         </div>
       </div>
 
