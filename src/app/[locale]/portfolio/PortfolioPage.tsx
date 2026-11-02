@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import type { GalleryCategory } from '@/lib/gallery'
+import { Link } from '@/i18n/navigation'
+import { useMoodboard } from '@/lib/moodboard'
 
 export default function PortfolioPage({ categories }: { categories: GalleryCategory[] }) {
   const t    = useTranslations('portfolio')
@@ -22,6 +24,31 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
   }))
 
   const openLightbox = useCallback((idx: number) => setLightboxIndex(idx), [])
+
+  const { saved, isSaved, toggle } = useMoodboard()
+  const currentPhoto = activeCategory?.photos[lightboxIndex]
+
+  const saveButton = (photo: GalleryCategory['photos'][number], className: string) => {
+    const on = isSaved(photo.src)
+    return (
+      <button
+        key="moodboard"
+        type="button"
+        onClick={e => { e.stopPropagation(); toggle({ src: photo.src, category: photo.category }) }}
+        aria-pressed={on}
+        aria-label={on ? t('saved') : t('save')}
+        title={on ? t('saved') : t('save')}
+        className={className}
+      >
+        <span
+          className="material-symbols-outlined !text-xl"
+          style={{ fontVariationSettings: `'FILL' ${on ? 1 : 0}` }}
+        >
+          favorite
+        </span>
+      </button>
+    )
+  }
 
   return (
     <div className="bg-surface text-primary min-h-screen">
@@ -100,9 +127,14 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
               {activeCategory.photos.map((photo, idx) => (
                 <div
                   key={photo.id}
-                  className="aspect-square overflow-hidden group cursor-pointer bg-surface-container-low"
+                  className="relative aspect-square overflow-hidden group cursor-pointer bg-surface-container-low"
                   onClick={() => openLightbox(idx)}
                 >
+                  {saveButton(photo, `absolute top-2 right-2 z-10 w-10 h-10 flex items-center justify-center backdrop-blur-sm transition-all duration-[400ms] ${
+                    isSaved(photo.src)
+                      ? 'bg-secondary text-on-secondary opacity-100'
+                      : 'bg-charcoal-900/40 text-white md:opacity-0 group-hover:opacity-100 hover:bg-secondary'
+                  }`)}
                   <Image
                     src={photo.src}
                     alt={`Custom furniture by Igor Vasylkov — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
@@ -126,6 +158,12 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
         styles={{
           container: { backgroundColor: 'rgba(31, 30, 29, 0.97)' },
         }}
+        toolbar={{
+          buttons: [
+            currentPhoto && saveButton(currentPhoto, `yarl__button flex items-center gap-2 ${isSaved(currentPhoto.src) ? '!text-secondary' : ''}`),
+            'close',
+          ],
+        }}
         carousel={{ finite: false }}
         animation={{ fade: 300 }}
         controller={{ closeOnBackdropClick: true }}
@@ -133,6 +171,33 @@ export default function PortfolioPage({ categories }: { categories: GalleryCateg
           view: ({ index }) => setLightboxIndex(index),
         }}
       />
+
+      {/* Moodboard bar */}
+      <div className={`fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md transition-all duration-500 ${
+        saved.length > 0 ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
+      }`}>
+        <Link
+          href="/contact#brief"
+          className="group flex items-center gap-4 bg-primary text-on-primary pl-2 pr-5 py-2 shadow-[0_24px_60px_-20px_rgba(40,30,15,0.6)] hover:bg-secondary transition-colors duration-[400ms]"
+        >
+          <span className="flex -space-x-3 shrink-0">
+            {saved.slice(-3).map(p => (
+              <span key={p.src} className="relative w-10 h-10 overflow-hidden ring-2 ring-primary group-hover:ring-secondary transition-all duration-[400ms]">
+                <Image src={p.src} alt="" fill sizes="40px" className="object-cover" />
+              </span>
+            ))}
+          </span>
+          <span className="flex-1 min-w-0">
+            <span className="block font-label text-[9px] uppercase tracking-[0.25em] text-on-primary/60">
+              {t('board_count', { count: saved.length })}
+            </span>
+            <span className="block font-headline text-base leading-tight truncate">{t('board_cta')}</span>
+          </span>
+          <span className="material-symbols-outlined text-secondary group-hover:text-on-primary transition-colors duration-[400ms]">
+            arrow_forward
+          </span>
+        </Link>
+      </div>
     </div>
   )
 }

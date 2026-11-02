@@ -34,7 +34,11 @@
     "label": "Crafted in Odessa",
     "title": "The Collection",
     "pieces": "{count} pieces",
-    "works": "{count} works"
+    "works": "{count} works",
+    "save": "Save to moodboard",
+    "saved": "Saved to moodboard",
+    "board_count": "{count, plural, one {# photo saved} other {# photos saved}}",
+    "board_cta": "Discuss these with Igor"
   },
   "categories": {
     "Kitchens": "Kitchens",
@@ -96,7 +100,13 @@
       "hint_empty": "Pick at least one piece or describe your idea.",
       "hint_ready": "Telegram: the text is copied for you, just paste it into the chat.",
       "copied": "Copied. Paste it into the chat with Igor.",
-      "or_call": "Or give us a call"
+      "or_call": "Or give us a call",
+      "refs_label": "From your moodboard",
+      "refs_hint": "These photos go into your message as references.",
+      "refs_remove": "Remove",
+      "refs_empty": "Tip: tap the heart on any gallery photo and it will appear here as a reference.",
+      "refs_browse": "Open the gallery",
+      "letter_refs": "References I liked"
     }
   },
   "footer": {
