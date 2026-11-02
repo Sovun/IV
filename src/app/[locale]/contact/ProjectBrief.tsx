@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import type { CategoryKey } from '@/lib/categories'
+import { Link } from '@/i18n/navigation'
+import { useMoodboard } from '@/lib/moodboard'
 
 const TELEGRAM_URL = 'https://t.me/+380977939401'
 const EMAIL        = 'ive@ukr.net'
@@ -27,11 +29,15 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
   const [note, setNote]         = useState('')
   const [name, setName]         = useState('')
   const [copied, setCopied]     = useState(false)
+  const { saved, remove }       = useMoodboard()
 
   const toggle = (key: CategoryKey) =>
     setItems(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key])
 
-  const ready = items.length > 0 || note.trim().length > 0
+  const ready = items.length > 0 || note.trim().length > 0 || saved.length > 0
+
+  // Saved photos only exist client-side, so window is safe whenever there are any
+  const refs = saved.map(p => `${window.location.origin}${encodeURI(p.src)}`)
 
   const fields = [
     items.length > 0 && `${t('letter_what')}: ${items.map(k => tc(k)).join(', ')}`,
@@ -44,6 +50,7 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
     t('letter_greeting'),
     t('letter_intro'),
     ...(fields.length > 0 ? ['', ...fields] : []),
+    ...(refs.length > 0 ? ['', `${t('letter_refs')}:`, ...refs] : []),
     ...(note.trim() ? ['', note.trim()] : []),
     '',
     name.trim() || t('letter_thanks'),
@@ -119,6 +126,38 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
                   )
                 })}
               </div>
+
+              <div className="mt-6 border-l-2 border-secondary/60 pl-4">
+                {saved.length > 0 ? (
+                  <>
+                    <p className="font-label text-[10px] uppercase tracking-[0.25em] text-primary mb-1">{t('refs_label')}</p>
+                    <p className="font-body text-xs text-primary/60 mb-4">{t('refs_hint')}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {saved.map(p => (
+                        <div key={p.src} className="group relative w-16 h-16 sm:w-20 sm:h-20 overflow-hidden">
+                          <Image src={p.src} alt={tc(p.category)} fill sizes="80px" className="object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => remove(p.src)}
+                            aria-label={t('refs_remove')}
+                            title={t('refs_remove')}
+                            className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center bg-charcoal-900/60 text-white hover:bg-secondary transition-colors duration-300"
+                          >
+                            <span className="material-symbols-outlined !text-sm">close</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <p className="font-body text-xs text-primary/60 leading-relaxed">
+                    {t('refs_empty')}{' '}
+                    <Link href="/portfolio" className="text-secondary border-b border-secondary/40 hover:border-secondary">
+                      {t('refs_browse')}
+                    </Link>
+                  </p>
+                )}
+              </div>
             </div>
 
             <div>
@@ -177,11 +216,20 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
               <p className="font-label text-[10px] uppercase tracking-widest text-primary/40 mb-6">
                 {t('preview_to')}
               </p>
-              <pre className={`whitespace-pre-wrap font-headline text-base md:text-lg leading-relaxed transition-colors duration-[400ms] ${
+              <pre className={`whitespace-pre-wrap [overflow-wrap:anywhere] font-headline text-base md:text-lg leading-relaxed transition-colors duration-[400ms] ${
                 ready ? 'text-on-surface' : 'text-primary/40'
               }`}>
                 {letter}
               </pre>
+              {saved.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-outline-variant/40 flex flex-wrap gap-2">
+                  {saved.map(p => (
+                    <span key={p.src} className="relative w-12 h-12 overflow-hidden">
+                      <Image src={p.src} alt="" fill sizes="48px" className="object-cover" />
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
