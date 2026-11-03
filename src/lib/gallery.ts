@@ -26,6 +26,13 @@ export function getGalleryPhotos(): GalleryCategory[] {
       .filter(f => /\.(jpe?g|png|webp)$/i.test(f))
       .sort()
 
+    // The newest stairs are the strongest work, so that category runs newest first.
+    if (category === 'Stairs') files.reverse()
+
+    // A file named cover_* is the category's chosen face: it leads whatever the order.
+    const isCover = (f: string) => f.startsWith('cover_')
+    files.sort((a, b) => Number(isCover(b)) - Number(isCover(a)))
+
     if (files.length === 0) return []
 
     const photos: GalleryPhoto[] = files.map(f => ({

@@ -21,8 +21,8 @@ const STITCH = {
 const PROCESS = [
   '/gallery/Interior_Decorations/DSC_5363.JPG',
   '/gallery/Wardrobes_and_Bedroom/DSC_5340.JPG',
-  '/gallery/Kitchens/DSC_5410.JPG',
-  '/gallery/Stairs/DSC_5373.JPG',
+  '/gallery/Interior_Decorations/ig_DN21AlZUIx2.jpg',
+  '/gallery/Stairs/cover_CliKT2fIYl1.jpg',
 ]
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
