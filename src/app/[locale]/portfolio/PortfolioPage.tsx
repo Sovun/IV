@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
@@ -7,6 +7,31 @@ import 'yet-another-react-lightbox/styles.css'
 import type { GalleryCategory } from '@/lib/gallery'
 import { Link } from '@/i18n/navigation'
 import { useMoodboard } from '@/lib/moodboard'
+
+// Editorial layout for 3:2 photographs: every three pieces form a module with
+// one large image (two columns, two rows) beside two stacked small ones. The
+// large side alternates. Two stacked 3:2 frames are as tall as one at double
+// width, so nothing is cropped beyond a few pixels of gutter.
+function place(i: number, n: number) {
+  const modules = Math.floor(n / 3)
+  const m = Math.floor(i / 3)
+  if (m < modules) {
+    const k = i % 3
+    const bigLeft = m % 2 === 0
+    const row = 2 * m + 1
+    if (bigLeft ? k === 0 : k === 2) {
+      return { col: bigLeft ? '1 / span 2' : '2 / span 2', row: `${row} / span 2`, big: true, fill: true }
+    }
+    const stack = bigLeft ? k - 1 : k
+    return { col: bigLeft ? '3' : '1', row: `${row + stack}`, big: false, fill: false }
+  }
+  // Leftovers: a single piece takes a wide frame, a pair sits side by side.
+  // Nothing shares these rows, so the frames keep their own 3:2 height.
+  const row = 2 * modules + 1
+  const rest = n - modules * 3
+  if (rest === 1) return { col: '1 / span 2', row: `${row}`, big: true, fill: false }
+  return { col: `${i - modules * 3 + 1}`, row: `${row}`, big: false, fill: false }
+}
 
 export default function PortfolioPage({ categories, initialKey }: { categories: GalleryCategory[]; initialKey?: string }) {
   const t    = useTranslations('portfolio')
@@ -28,6 +53,27 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
 
   const { saved, isSaved, toggle } = useMoodboard()
   const currentPhoto = activeCategory?.photos[lightboxIndex]
+
+  // Carry the photo into the brief as a reference, then go there
+  const keep = (photo: GalleryCategory['photos'][number]) => {
+    if (!isSaved(photo.src)) toggle({ src: photo.src, category: photo.category })
+  }
+
+  // Fade each piece in as it scrolls into view; re-run when the category changes
+  const gridRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid) return
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue
+        e.target.classList.add('is-in')
+        io.unobserve(e.target)
+      }
+    }, { rootMargin: '0px 0px -8% 0px' })
+    grid.querySelectorAll('.reveal').forEach(n => io.observe(n))
+    return () => io.disconnect()
+  }, [activeCategory?.key])
 
   const saveButton = (photo: GalleryCategory['photos'][number], className: string) => {
     const on = isSaved(photo.src)
@@ -124,27 +170,56 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
                 {t('works', { count: activeCategory.photos.length })}
               </span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {activeCategory.photos.map((photo, idx) => (
-                <div
-                  key={photo.id}
-                  className="relative aspect-square overflow-hidden group cursor-pointer bg-surface-container-low"
-                  onClick={() => openLightbox(idx)}
-                >
-                  {saveButton(photo, `absolute top-2 right-2 z-10 w-10 h-10 flex items-center justify-center backdrop-blur-sm transition-all duration-[400ms] ${
-                    isSaved(photo.src)
-                      ? 'bg-secondary text-on-secondary opacity-100'
-                      : 'bg-charcoal-900/40 text-white md:opacity-0 group-hover:opacity-100 hover:bg-secondary'
-                  }`)}
-                  <Image
-                    src={photo.src}
-                    alt={`Custom furniture by Igor Vasylkov — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
-                    width={600}
-                    height={600}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              ))}
+            <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              {activeCategory.photos.map((photo, idx) => {
+                const { col, row, big, fill } = place(idx, activeCategory.photos.length)
+                const on = isSaved(photo.src)
+                return (
+                  <div
+                    key={photo.id}
+                    style={{ '--c': col, '--r': row, transitionDelay: `${(idx % 3) * 90}ms` } as React.CSSProperties}
+                    className={`reveal group relative overflow-hidden cursor-pointer bg-surface-container-low aspect-[3/2] md:[grid-column:var(--c)] md:[grid-row:var(--r)] ${
+                      fill ? 'md:aspect-auto md:h-full' : ''
+                    }`}
+                    onClick={() => openLightbox(idx)}
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={`Custom furniture by Igor Vasylkov — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
+                      fill
+                      sizes={big ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
+                      quality={85}
+                      className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                    />
+
+                    {/* Editorial caption: hover on desktop, always on touch */}
+                    <div className="absolute inset-x-0 bottom-0 pt-20 pb-4 px-4 md:pb-5 md:px-5 flex items-end justify-between gap-4 bg-gradient-to-t from-charcoal-900/70 via-charcoal-900/20 to-transparent transition-opacity duration-500 md:opacity-0 md:group-hover:opacity-100">
+                      <div className="min-w-0 translate-y-0 md:translate-y-2 md:group-hover:translate-y-0 transition-transform duration-500">
+                        <p className="font-label text-[9px] uppercase tracking-[0.3em] text-white/60 mb-1">
+                          {String(idx + 1).padStart(2, '0')} / {String(activeCategory.photos.length).padStart(2, '0')}
+                        </p>
+                        <p className={`font-headline text-white leading-tight truncate ${big ? 'text-xl md:text-2xl' : 'text-base'}`}>
+                          {tCat(activeCategory.key as Parameters<typeof tCat>[0])}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 gap-px" onClick={e => e.stopPropagation()}>
+                        {saveButton(photo, `w-11 h-11 flex items-center justify-center backdrop-blur-sm transition-colors duration-[400ms] ${
+                          on ? 'bg-secondary text-on-secondary' : 'bg-white/15 text-white hover:bg-secondary'
+                        }`)}
+                        <Link
+                          href="/contact#brief"
+                          onClick={() => keep(photo)}
+                          aria-label={t('ask')}
+                          title={t('ask')}
+                          className="w-11 h-11 flex items-center justify-center backdrop-blur-sm bg-white/15 text-white hover:bg-secondary transition-colors duration-[400ms]"
+                        >
+                          <span className="material-symbols-outlined !text-xl">forum</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
