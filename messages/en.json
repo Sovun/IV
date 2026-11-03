@@ -94,11 +94,6 @@
     "craft_title": "An Approach Forged in Complexity",
     "craft_text": "We don't avoid complicated projects. Full apartment interiors, restaurants, spaces with unusual layouts or existing structures that need matching — that's most of what we do.\n\nWe're involved from the first conversation through to installation, working directly with clients. When architects or designers are involved, we work alongside them. The question we keep coming back to: will this still look good and feel right in ten years? In twenty?\n\nMaterials aren't a constraint here. Oak, walnut, metal, glass — old buildings with unusual finishes that need to be matched exactly. Clients tend to be surprised that the piece feels handmade and also fits with precision. That combination takes effort. We think it's the point.\n\nFurniture that gets passed down.",
     "craft_quote": "Will this still look good and feel right in ten years? In twenty?",
-    "talk_label": "Straight to the master",
-    "talk_title": "Talk to Igor",
-    "talk_body": "No managers, no middlemen: the person who answers your call or message is the one who draws and makes the piece. Describe your project in four steps and the letter writes itself.",
-    "talk_telegram": "Write on Telegram",
-    "talk_call": "Call",
     "location": "Odessa, Ukraine"
   },
   "contact": {
@@ -109,7 +104,7 @@
     "hours": "Mon–Sat: 9:00–19:00",
     "location": "Odessa, Ukraine",
     "brief": {
-      "title": "Tell us about your project",
+      "title": "Arrange a meeting",
       "intro": "Four quick steps and your note to Igor is ready. Pick what you'd like made and we'll draft the message, so all that's left is to send it.",
       "step_what": "What are we making?",
       "step_stage": "Where are you at?",
