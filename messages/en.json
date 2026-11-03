@@ -47,6 +47,7 @@
     "works": "{count} works",
     "save": "Save to moodboard",
     "saved": "Saved to moodboard",
+    "ask": "Ask about this piece",
     "board_count": "{count, plural, one {# photo saved} other {# photos saved}}",
     "board_cta": "Discuss these with Igor"
   },
