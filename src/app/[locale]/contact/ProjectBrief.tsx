@@ -29,12 +29,17 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
   const [note, setNote]         = useState('')
   const [name, setName]         = useState('')
   const [copied, setCopied]     = useState(false)
+  // Once the visitor edits the letter by hand, it is theirs: the steps stop rewriting it
+  const [draft, setDraft]       = useState<string | null>(null)
   const { saved, remove }       = useMoodboard()
 
   const toggle = (key: CategoryKey) =>
     setItems(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key])
 
-  const ready = items.length > 0 || note.trim().length > 0 || saved.length > 0
+  const manual = draft !== null
+  const ready = manual
+    ? draft.trim().length > 0
+    : items.length > 0 || note.trim().length > 0 || saved.length > 0
 
   // Saved photos only exist client-side, so window is safe whenever there are any
   const refs = saved.map(p => `${window.location.origin}${encodeURI(p.src)}`)
@@ -46,7 +51,7 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
     place.trim()     && `${t('letter_place')}: ${place.trim()}`,
   ].filter(Boolean)
 
-  const letter = [
+  const generated = [
     t('letter_greeting'),
     t('letter_intro'),
     ...(fields.length > 0 ? ['', ...fields] : []),
@@ -55,6 +60,8 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
     '',
     name.trim() || t('letter_thanks'),
   ].join('\n')
+
+  const letter = draft ?? generated
 
   const sendTelegram = () => {
     navigator.clipboard?.writeText(letter).then(() => setCopied(true), () => {})
@@ -216,11 +223,34 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
               <p className="font-label text-[10px] uppercase tracking-widest text-primary/40 mb-6">
                 {t('preview_to')}
               </p>
-              <pre className={`whitespace-pre-wrap [overflow-wrap:anywhere] font-headline text-base md:text-lg leading-relaxed transition-colors duration-[400ms] ${
-                ready ? 'text-on-surface' : 'text-primary/40'
-              }`}>
-                {letter}
-              </pre>
+              {/* The letter is editable in place. An invisible replica in the same
+                  grid cell gives the textarea its height, so it grows with the text. */}
+              <div className="grid">
+                <pre aria-hidden className="[grid-area:1/1] invisible whitespace-pre-wrap [overflow-wrap:anywhere] font-headline text-base md:text-lg leading-relaxed">
+                  {letter}{' '}
+                </pre>
+                <textarea
+                  value={letter}
+                  onChange={e => setDraft(e.target.value)}
+                  aria-label={t('preview_label')}
+                  spellCheck={false}
+                  className={`[grid-area:1/1] w-full bg-transparent resize-none overflow-hidden outline-none whitespace-pre-wrap [overflow-wrap:anywhere] font-headline text-base md:text-lg leading-relaxed transition-colors duration-[400ms] ${
+                    ready ? 'text-on-surface' : 'text-primary/40'
+                  }`}
+                />
+              </div>
+              {manual && (
+                <p className="mt-5 font-body text-xs text-primary/60 leading-relaxed">
+                  {t('manual_hint')}{' '}
+                  <button
+                    type="button"
+                    onClick={() => setDraft(null)}
+                    className="text-secondary border-b border-secondary/40 hover:border-secondary"
+                  >
+                    {t('manual_reset')}
+                  </button>
+                </p>
+              )}
               {saved.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-outline-variant/40 flex flex-wrap gap-2">
                   {saved.map(p => (

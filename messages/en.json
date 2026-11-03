@@ -98,6 +98,8 @@
       "name_placeholder": "Your name",
       "preview_label": "Your message",
       "preview_to": "To: Igor Vasylkov",
+      "manual_hint": "You are editing the letter by hand, so the steps no longer change it.",
+      "manual_reset": "Rebuild from the steps",
       "letter_greeting": "Hello Igor,",
       "letter_intro": "I found you through your website and would like to discuss a project.",
       "letter_what": "What",
