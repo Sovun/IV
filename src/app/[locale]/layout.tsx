@@ -5,12 +5,14 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { SITE_URL } from '@/lib/site'
 import './globals.css'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const isUA = locale === 'ua'
   return {
+    metadataBase: new URL(SITE_URL),
     title: isUA
       ? 'Меблі на замовлення в Одесі | Ігор Васильков'
       : 'Custom Furniture in Odessa, Ukraine | Igor Vasylkov',
@@ -46,7 +48,7 @@ const schemaOrg = {
     alternateName: 'Ігор Васильков',
     jobTitle: 'Founder and Managing Director',
   },
-  url: 'https://igorvasylkov.com',
+  url: SITE_URL,
   telephone: '+380674864629',
   email: 'ive@ukr.net',
   address: {
