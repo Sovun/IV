@@ -14,20 +14,22 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     metadataBase: new URL(SITE_URL),
     title: isUA
-      ? 'Меблі на замовлення в Одесі | Ігор Васильков'
-      : 'Custom Furniture in Odessa, Ukraine | Igor Vasylkov',
+      ? 'Іволга | Меблі на замовлення в Одесі'
+      : 'Ivolga | Custom Furniture in Odessa, Ukraine',
     description: isUA
-      ? 'Майстерня меблів Ігоря Василькова в Одесі: меблі на замовлення будь-якої складності. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Телефон: +380674864629'
-      : 'Igor Vasylkov\'s furniture workshop in Odessa, Ukraine: custom furniture of any complexity. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Call: +380674864629',
+      ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2002 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Власник майстерні: Ігор Васильков. Телефон: +380674864629'
+      : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2002. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Owner: Igor Vasylkov. Call: +380674864629',
     keywords: isUA
-      ? ['меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення', 'Ігор Васильков']
-      : ['custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa', 'Igor Vasylkov'],
+      ? ['Іволга', 'меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення', 'Ігор Васильков']
+      : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa', 'Igor Vasylkov'],
     alternates: {
       canonical: `/${locale}`,
       languages: { 'uk': '/ua', 'en': '/en' },
     },
     openGraph: {
-      title: isUA ? 'Ігор Васильков — Меблі на замовлення' : 'Igor Vasylkov — Custom Furniture',
+      title: isUA ? 'Іволга: меблі на замовлення' : 'Ivolga: custom furniture',
+      siteName: isUA ? 'Іволга' : 'Ivolga',
+      images: [{ url: '/logo/ivolga-mark.svg', alt: isUA ? 'Іволга' : 'Ivolga' }],
       description: isUA ? 'Майстерність у кожній деталі. Одеса, Україна.' : 'Mastery in Every Detail. Odessa, Ukraine.',
       locale: isUA ? 'uk_UA' : 'en_US',
       type: 'website',
@@ -38,17 +40,19 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'FurnitureStore'],
-  name: 'Igor Vasylkov Custom Furniture',
-  alternateName: 'Ігор Васильков Меблі на замовлення',
-  description: 'Custom furniture workshop in Odessa, Ukraine, with a team of professional craftsmen. Kitchens, wardrobes, doors, stairs, tables, restaurant décor.',
+  name: 'Ivolga',
+  alternateName: ['Іволга', 'Ivolga Custom Furniture', 'Іволга Меблі на замовлення'],
+  description: 'Ivolga is a custom furniture workshop in Odessa, Ukraine, with a team of professional craftsmen. Kitchens, wardrobes, doors, stairs, tables, restaurant décor.',
   foundingDate: '2002',
   founder: {
     '@type': 'Person',
     name: 'Igor Vasylkov',
     alternateName: 'Ігор Васильков',
-    jobTitle: 'Founder and Managing Director',
+    jobTitle: 'Owner and Managing Director',
   },
   url: SITE_URL,
+  logo: `${SITE_URL}/logo/ivolga-mark.svg`,
+  image: `${SITE_URL}/logo/ivolga-en.svg`,
   telephone: '+380674864629',
   email: 'ive@ukr.net',
   address: {
@@ -96,7 +100,8 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
       </head>
-      <body className="bg-surface text-on-surface font-body antialiased">
+      {/* suppressHydrationWarning: browser extensions add attributes to <body> before React loads */}
+      <body className="bg-surface text-on-surface font-body antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main>{children}</main>

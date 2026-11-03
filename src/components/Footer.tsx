@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import Image from 'next/image'
 
 export default async function Footer() {
   const t  = await getTranslations('footer')
@@ -18,8 +19,14 @@ export default async function Footer() {
 
         {/* Brand + address */}
         <div className="space-y-8">
-          <Link href="/" className="font-headline text-lg tracking-tighter text-[#5f5e5e] block">
-            IGOR VASYLKOV
+          <Link href="/" className="block w-fit hover:opacity-80 transition-all duration-[400ms]">
+            <Image
+              src="/logo/ivolga-en.svg"
+              alt="Ivolga"
+              width={808}
+              height={232}
+              className="h-10 w-auto"
+            />
           </Link>
           <div className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 leading-relaxed">
             Odessa, Ukraine<br />

@@ -2,6 +2,7 @@
 import { useLocale, useTranslations } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 // One long page: the menu is a set of anchors, and the item for the section
 // under the reader is highlighted as they scroll.
@@ -51,12 +52,16 @@ export default function Header() {
     <header className="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 backdrop-blur-md transition-all duration-300">
       <nav className={`flex justify-between items-center px-12 max-w-[1920px] mx-auto transition-all duration-300 ${scrolled ? 'py-4' : 'py-8'}`}>
 
-        {/* Wordmark */}
-        <Link
-          href="/"
-          className={`font-headline tracking-widest text-[#5f5e5e] uppercase hover:text-[#775a19] transition-all duration-300 ${scrolled ? 'text-lg' : 'text-2xl'}`}
-        >
-          Igor Vasylkov
+        {/* Logo: one mark for both languages */}
+        <Link href="/" className="block hover:opacity-80 transition-all duration-300" aria-label="Ivolga">
+          <Image
+            src="/logo/ivolga-en.svg"
+            alt={locale === 'ua' ? 'Іволга: меблі на замовлення, Одеса' : 'Ivolga: custom furniture, Odessa'}
+            width={808}
+            height={232}
+            priority
+            className={`w-auto transition-all duration-300 ${scrolled ? 'h-9' : 'h-12 md:h-14'}`}
+          />
         </Link>
 
         {/* Desktop nav */}

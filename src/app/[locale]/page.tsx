@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="absolute inset-0 z-0">
             <Image
               src={img(0, STITCH.hero)}
-              alt="Bespoke Contemporary Kitchen — Igor Vasylkov, Odessa"
+              alt="Bespoke contemporary kitchen by the Ivolga workshop, Odessa / Кухня на замовлення від майстерні «Іволга», Одеса"
               fill
               sizes="100vw"
               quality={90}
@@ -95,7 +95,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <div className="aspect-[4/5] bg-surface-container-low relative overflow-hidden">
                 <Image
                   src={img(1, STITCH.heritage)}
-                  alt="Hand-crafted desk and shelving by the Igor Vasylkov furniture workshop, Odessa — fine joinery and natural wood grain / Стіл і полиці від меблевої майстерні Ігоря Василькова, Одеса"
+                  alt="Hand-crafted desk and shelving by the Ivolga furniture workshop, Odessa — fine joinery and natural wood grain / Стіл і полиці від меблевої майстерні «Іволга», Одеса"
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   quality={90}

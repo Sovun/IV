@@ -49,7 +49,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
             <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
               <Image
                 src={PORTRAIT}
-                alt="Igor Vasylkov — founder and managing director of the custom furniture workshop, Odessa / Ігор Васильков — засновник і керівник меблевої майстерні, Одеса"
+                alt="Igor Vasylkov, owner of the Ivolga custom furniture workshop, Odessa / Ігор Васильков, власник меблевої майстерні «Іволга», Одеса"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 quality={85}
