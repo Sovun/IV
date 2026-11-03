@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { getInstagramPhotos } from '@/lib/instagram'
 import { getGalleryPhotos } from '@/lib/gallery'
 import HomePlan from '@/components/HomePlan'
+import HomeProcess from '@/components/HomeProcess'
 import Image from 'next/image'
 
 // Fallback images from local gallery (used when Instagram token is not set)
@@ -10,6 +11,14 @@ const STITCH = {
   hero:         '/DSC_5392.JPG',
   heritage:     '/gallery/Interior_Decorations/DSC_5346.JPG',
 }
+
+// One photo per step of the process story: the room, the joinery, the grain, the fit
+const PROCESS = [
+  '/gallery/Interior_Decorations/DSC_5363.JPG',
+  '/gallery/Wardrobes_and_Bedroom/DSC_5340.JPG',
+  '/gallery/Kitchens/DSC_5410.JPG',
+  '/gallery/Stairs/DSC_5373.JPG',
+]
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -143,6 +152,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+
+      {/* ── How it happens (process story) ───────────── */}
+      <HomeProcess photos={PROCESS} />
 
       {/* ── Final CTA ────────────────────────────────── */}
       <section className="py-24 md:py-48 bg-surface-container-high">
