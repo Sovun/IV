@@ -8,11 +8,12 @@ import type { GalleryCategory } from '@/lib/gallery'
 import { Link } from '@/i18n/navigation'
 import { useMoodboard } from '@/lib/moodboard'
 
-export default function PortfolioPage({ categories }: { categories: GalleryCategory[] }) {
+export default function PortfolioPage({ categories, initialKey }: { categories: GalleryCategory[]; initialKey?: string }) {
   const t    = useTranslations('portfolio')
   const tCat = useTranslations('categories')
 
-  const [activeKey, setActiveKey] = useState<string>(categories[0]?.key ?? '')
+  // ?category= from the home plan opens straight on that category
+  const [activeKey, setActiveKey] = useState<string>(initialKey ?? categories[0]?.key ?? '')
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
   // Fall back to the first category if the active one is missing (e.g. locale switch)

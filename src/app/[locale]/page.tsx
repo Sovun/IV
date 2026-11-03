@@ -1,21 +1,21 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getInstagramPhotos } from '@/lib/instagram'
+import { getGalleryPhotos } from '@/lib/gallery'
+import HomePlan from '@/components/HomePlan'
 import Image from 'next/image'
 
 // Fallback images from local gallery (used when Instagram token is not set)
 const STITCH = {
   hero:         '/DSC_5392.JPG',
   heritage:     '/gallery/Interior_Decorations/DSC_5346.JPG',
-  galleryLarge: '/gallery/Kitchens/DSC_5404.JPG',
-  gallerySide:  '/gallery/Wardrobes_and_Bedroom/DSC_5330.JPG',
-  galleryAccent:'/gallery/Stairs/DSC_5373.JPG',
 }
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const photos = await getInstagramPhotos()
   const t = await getTranslations({ locale, namespace: 'home' })
+  const rooms = getGalleryPhotos().map(({ key, photos }) => ({ key, src: photos[0].src, count: photos.length }))
 
   const img = (idx: number, fallback: string) =>
     photos[idx]?.media_url || fallback
@@ -110,93 +110,27 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* ── Curated Highlights ───────────────────────── */}
+      {/* ── The Whole Home (floor plan) ──────────────── */}
       <section className="bg-surface py-16 md:py-32 px-6 md:px-12">
         <div className="max-w-[1920px] mx-auto">
 
-          <div className="flex justify-between items-end mb-10 md:mb-20">
-            <div>
+          <div className="flex justify-between items-end gap-8 mb-10 md:mb-20">
+            <div className="max-w-2xl">
               <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-4 block">
-                {t('highlights_label')}
+                {t('plan_label')}
               </span>
-              <h2 className="text-3xl md:text-5xl font-headline">{t('highlights_title')}</h2>
+              <h2 className="text-3xl md:text-5xl font-headline mb-6">{t('plan_title')}</h2>
+              <p className="text-primary/70 leading-relaxed font-body">{t('plan_body')}</p>
             </div>
             <Link
               href="/portfolio"
-              className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms] hidden md:block"
+              className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms] hidden md:block whitespace-nowrap"
             >
-              {t('highlights_view_all')}
+              {t('plan_all')}
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-
-            {/* Large Feature */}
-            <Link href="/portfolio" className="md:col-span-8 group cursor-pointer block">
-              <div className="aspect-[4/3] md:aspect-[16/9] bg-surface-container-low mb-4 md:mb-8 overflow-hidden relative">
-                <Image
-                  src={img(2, STITCH.galleryLarge)}
-                  alt="The Minimalist Penthouse Kitchen — custom cabinetry by Igor Vasylkov, Odessa"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 66vw"
-                  quality={90}
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-headline mb-2">{t('highlight_1_title')}</h3>
-                  <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                    {t('highlight_1_meta')}
-                  </p>
-                </div>
-                <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-[400ms]">
-                  north_east
-                </span>
-              </div>
-            </Link>
-
-            {/* Side Feature */}
-            <Link href="/portfolio" className="md:col-span-4 md:mt-24 group cursor-pointer block">
-              <div className="aspect-[4/3] md:aspect-[3/4] bg-surface-container-low mb-4 md:mb-8 overflow-hidden relative">
-                <Image
-                  src={img(3, STITCH.gallerySide)}
-                  alt="Bespoke dressing room — smoked glass doors and leather-lined drawers by Igor Vasylkov"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  quality={90}
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-headline mb-2">{t('highlight_2_title')}</h3>
-                <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                  {t('highlight_2_meta')}
-                </p>
-              </div>
-            </Link>
-
-            {/* Bottom Accent */}
-            <Link href="/portfolio" className="md:col-span-5 md:col-start-2 group cursor-pointer block">
-              <div className="aspect-[4/3] md:aspect-square bg-surface-container-low mb-4 md:mb-8 overflow-hidden relative">
-                <Image
-                  src={img(4, STITCH.galleryAccent)}
-                  alt="Refined dovetail joinery detail — hand-cut walnut by master craftsman Igor Vasylkov"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  quality={90}
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-headline mb-2">{t('highlight_3_title')}</h3>
-                <p className="font-label text-[10px] uppercase tracking-widest text-primary/50">
-                  {t('highlight_3_meta')}
-                </p>
-              </div>
-            </Link>
-
-          </div>
+          <HomePlan rooms={rooms} />
 
           {/* Mobile: view all link */}
           <div className="mt-10 text-center md:hidden">
@@ -204,7 +138,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               href="/portfolio"
               className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms]"
             >
-              {t('highlights_view_all')}
+              {t('plan_all')}
             </Link>
           </div>
         </div>
