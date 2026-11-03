@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ? 'Меблі на замовлення в Одесі | Ігор Васильков'
       : 'Custom Furniture in Odessa, Ukraine | Igor Vasylkov',
     description: isUA
-      ? 'Меблі на замовлення будь-якої складності в Одесі. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Телефон: +380674864629'
-      : 'Custom furniture of any complexity in Odessa, Ukraine. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Call: +380674864629',
+      ? 'Майстерня меблів Ігоря Василькова в Одесі: меблі на замовлення будь-якої складності. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Телефон: +380674864629'
+      : 'Igor Vasylkov\'s furniture workshop in Odessa, Ukraine: custom furniture of any complexity. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Call: +380674864629',
     keywords: isUA
       ? ['меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення', 'Ігор Васильков']
       : ['custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa', 'Igor Vasylkov'],
@@ -38,7 +38,14 @@ const schemaOrg = {
   '@type': ['LocalBusiness', 'FurnitureStore'],
   name: 'Igor Vasylkov Custom Furniture',
   alternateName: 'Ігор Васильков Меблі на замовлення',
-  description: 'Custom furniture of any complexity in Odessa, Ukraine. Kitchens, wardrobes, doors, stairs, tables, restaurant décor.',
+  description: 'Custom furniture workshop in Odessa, Ukraine, with a team of professional craftsmen. Kitchens, wardrobes, doors, stairs, tables, restaurant décor.',
+  foundingDate: '2002',
+  founder: {
+    '@type': 'Person',
+    name: 'Igor Vasylkov',
+    alternateName: 'Ігор Васильков',
+    jobTitle: 'Founder and Managing Director',
+  },
   url: 'https://igorvasylkov.com',
   telephone: '+380674864629',
   email: 'ive@ukr.net',

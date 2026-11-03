@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 
-// The master's section as an editorial dossier: a masthead with the portrait
-// hanging over the fold, his story told as three dated chapters, a strip of
-// plain facts, the craft text beside its own closing line and the question
-// he keeps asking, set on aged oak.
+// The workshop and its founder as an editorial dossier: a masthead with the
+// founder's portrait hanging over the fold, the story of the business told as
+// three dated chapters, a strip of plain facts, the craft text beside its own
+// closing line and the question the team keeps asking, set on aged oak.
 
 const PORTRAIT = '/igor-bird.jpg'
 const WOOD     = '/japan_gate.jpg'
@@ -49,7 +49,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
             <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
               <Image
                 src={PORTRAIT}
-                alt="Igor Vasylkov — master furniture craftsman, Odessa / Ігор Васильков — майстер меблів, Одеса"
+                alt="Igor Vasylkov — founder and managing director of the custom furniture workshop, Odessa / Ігор Васильков — засновник і керівник меблевої майстерні, Одеса"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 quality={85}
