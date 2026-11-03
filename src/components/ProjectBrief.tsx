@@ -7,7 +7,7 @@ import { useMoodboard } from '@/lib/moodboard'
 
 const TELEGRAM_URL = 'https://t.me/+380977939401'
 const EMAIL        = 'ive@ukr.net'
-const PHONE        = '+380674864629'
+const PHONE        = '+380977939401'
 
 const STAGES    = ['idea', 'design', 'renovation', 'replica'] as const
 const TIMELINES = ['asap', 'months', 'year', 'exploring'] as const

@@ -4,8 +4,9 @@ import ProjectBrief, { type BriefCover } from './ProjectBrief'
 // The end of the page: the project brief composer, then every channel spelled out.
 
 const TELEGRAM  = 'https://t.me/+380977939401'
-const PHONE     = '+380674864629'
-const PHONE_FMT = '+380 67 486 4629'
+const INSTAGRAM = 'https://www.instagram.com/igorvasylkov/'
+const PHONE     = '+380977939401'
+const PHONE_FMT = '+380 97 793 9401'
 
 export default async function Contact({ covers }: { covers: BriefCover[] }) {
   const t  = await getTranslations('contact')
@@ -31,11 +32,13 @@ export default async function Contact({ covers }: { covers: BriefCover[] }) {
         <a href="mailto:ive@ukr.net" className={big}>ive@ukr.net</a>, 'bg-surface-container-low')}
       {channel(t('telegram_label'),
         <a href={TELEGRAM} className={big}>@igorvasylkov</a>, 'bg-surface')}
+      {channel(t('instagram_label'),
+        <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className={big}>@igorvasylkov</a>, 'bg-surface-container-low')}
       {channel(t('hours_label'),
         <>
           <p className="font-headline text-3xl md:text-5xl mb-4">{t('hours')}</p>
           <p className="font-body text-sm text-primary/70 tracking-wide">{t('location')}</p>
-        </>, 'bg-surface-container-low')}
+        </>, 'bg-surface')}
 
     </section>
   )
