@@ -19,7 +19,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
   const closing  = craft.length > 1 ? craft.pop() : undefined
 
   const facts = [
-    { value: '2002',  label: t('fact_since') },
+    { value: '2003',  label: t('fact_since') },
     { value: rooms,   label: t('fact_rooms',  { count: rooms }) },
     { value: pieces,  label: t('fact_pieces', { count: pieces }) },
     { value: '1',     label: t('fact_hands') },
