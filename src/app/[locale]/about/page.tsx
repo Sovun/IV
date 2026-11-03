@@ -1,67 +1,218 @@
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
+import { Link } from '@/i18n/navigation'
+import { getGalleryPhotos } from '@/lib/gallery'
+
+// The master's page as an editorial dossier: a masthead with the portrait
+// hanging over the fold, his story told as three dated chapters, a strip of
+// plain facts, the craft text beside its own question, and a direct line to
+// Igor at the end.
+
+const PORTRAIT  = '/20231103_081535.jpg'
+const WOOD      = '/japan_gate.jpg'
+const TELEGRAM  = 'https://t.me/+380977939401'
+const PHONE     = '+380674864629'
+const PHONE_FMT = '+380 67 486 4629'
+
+const MILESTONES = ['m1', 'm2', 'm3'] as const
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'about' })
+  const t  = await getTranslations({ locale, namespace: 'about' })
+  const tc = await getTranslations({ locale, namespace: 'contact' })
 
-  const bodyParagraphs = t('body').split('\n\n')
-  const craftParagraphs = t('craft_text').split('\n\n')
+  const chapters = t('body').split('\n\n')
+  const craft    = t('craft_text').split('\n\n')
+  const closing  = craft.length > 1 ? craft.pop() : undefined
+
+  const gallery = getGalleryPhotos()
+  const rooms   = gallery.length
+  const pieces  = gallery.reduce((n, c) => n + c.photos.length, 0)
+
+  const facts = [
+    { value: '2002',  label: t('fact_since') },
+    { value: rooms,   label: t('fact_rooms',  { count: rooms }) },
+    { value: pieces,  label: t('fact_pieces', { count: pieces }) },
+    { value: '1',     label: t('fact_hands') },
+  ]
+
+  const label = 'font-label text-[10px] uppercase tracking-[0.3em] text-secondary block'
 
   return (
-    <div className="bg-surface text-primary">
-      {/* Header image — japan_gate */}
-      <Image
-        src="/japan_gate.jpg"
-        alt="Artisan workshop doorway — precision and heritage in every detail"
-        width={1920}
-        height={0}
-        sizes="100vw"
-        priority
-        quality={90}
-        className="w-full h-auto pt-24"
-        style={{ height: 'auto' }}
-      />
+    <div className="bg-surface text-primary selection:bg-secondary selection:text-on-secondary">
 
-      <div className="text-center py-16 px-6 bg-surface-container">
-        <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-6 block">
-          {t('subtitle')}
-        </span>
-        <h1 className="font-headline text-4xl md:text-5xl leading-tight mb-0">{t('title')}</h1>
-      </div>
+      {/* ── Masthead ─────────────────────────────────── */}
+      <section className="bg-surface-container pt-32 md:pt-44 pb-16 md:pb-0 px-6 md:px-12">
+        <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-end">
 
-      {/* Master photo — full, uncropped */}
-      <div className="max-w-3xl mx-auto px-4 md:px-6 pt-10 md:pt-16">
+          <div className="md:col-span-7 md:pb-28">
+            <span className={`${label} mb-6`}>{t('subtitle')}</span>
+            <h1 className="font-headline text-5xl md:text-8xl tracking-tighter leading-[0.95] mb-8 md:mb-10">
+              {t('title')}
+            </h1>
+            <p className="font-headline italic text-xl md:text-2xl text-primary/80 leading-relaxed max-w-2xl">
+              {t('lede')}
+            </p>
+          </div>
+
+          {/* The portrait hangs over the edge into the next section */}
+          <div className="md:col-span-4 md:col-start-9 md:translate-y-28">
+            <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
+              <Image
+                src={PORTRAIT}
+                alt="Igor Vasylkov — master furniture craftsman, Odessa / Ігор Васильков — майстер меблів, Одеса"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                quality={85}
+                priority
+                className="object-cover object-[50%_14%]"
+              />
+            </div>
+            <p className="mt-4 flex justify-between font-label text-[10px] uppercase tracking-[0.25em] text-primary/50">
+              <span>Igor Vasylkov</span>
+              <span>{t('location')}</span>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Three chapters ───────────────────────────── */}
+      <section className="bg-surface pt-16 md:pt-48 pb-16 md:pb-32 px-6 md:px-12">
+        <div className="max-w-[1920px] mx-auto">
+          <span className={`${label} mb-10 md:mb-14`}>{t('timeline_label')}</span>
+
+          <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
+            {/* Rail: down the left on mobile, across the top on desktop */}
+            <span aria-hidden className="absolute left-[3px] top-2 bottom-2 w-px bg-secondary/30 md:left-0 md:right-0 md:top-[5px] md:bottom-auto md:h-px md:w-auto" />
+
+            {MILESTONES.map((m, i) => (
+              <li key={m} className="relative pl-8 md:pl-0 md:pt-12">
+                <span aria-hidden className="absolute left-0 top-2 w-[7px] h-[7px] bg-secondary md:top-[2px]" />
+                <p className="font-headline text-5xl md:text-7xl tracking-tighter leading-none mb-5 tabular-nums">
+                  {t(`${m}_year`)}
+                </p>
+                <p className={`${label} mb-5`}>
+                  <span className="text-primary/40 mr-3">0{i + 1}</span>{t(`${m}_title`)}
+                </p>
+                <p className="font-body text-primary/70 leading-relaxed max-w-md">
+                  {chapters[i]}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ── Facts ────────────────────────────────────── */}
+      <section className="bg-surface-container-low py-12 md:py-20 px-6 md:px-12">
+        <dl className="max-w-[1920px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8">
+          {facts.map(({ value, label: text }) => (
+            <div key={text}>
+              <dd className="font-headline text-5xl md:text-7xl tracking-tighter leading-none tabular-nums mb-3">
+                {value}
+              </dd>
+              <dt className="font-label text-[10px] uppercase tracking-[0.2em] text-primary/50 leading-relaxed max-w-[14rem]">
+                {text}
+              </dt>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* ── The craft ────────────────────────────────── */}
+      <section className="bg-surface py-16 md:py-32 px-6 md:px-12">
+        <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
+          <div className="md:col-span-5 md:sticky md:top-28">
+            <h2 className="font-headline text-3xl md:text-5xl leading-tight">{t('craft_title')}</h2>
+          </div>
+          <div className="md:col-span-6 md:col-start-7 space-y-6">
+            {craft.map((para, i) => (
+              <p key={i} className="font-body text-primary/70 leading-relaxed">{para}</p>
+            ))}
+            {closing && (
+              <p className="font-headline text-2xl md:text-3xl leading-snug pt-4">{closing}</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── The question, on wood ────────────────────── */}
+      <section className="relative overflow-hidden min-h-[20rem] md:min-h-[26rem] flex items-center">
         <Image
-          src="/20231103_081535.jpg"
-          alt="Igor Vasylkov — master furniture craftsman, Odessa"
-          width={900}
-          height={0}
-          sizes="(max-width: 768px) 100vw, 768px"
-          quality={90}
-          className="w-full h-auto"
-          style={{ height: 'auto' }}
+          src={WOOD}
+          alt="Aged oak door with hand-forged iron plates — matched finishes in an old building / Старі дубові двері з кованими пластинами"
+          fill
+          sizes="100vw"
+          quality={80}
+          className="object-cover"
         />
-      </div>
+        <div className="absolute inset-0 bg-charcoal-900/65" />
+        <blockquote className="relative max-w-4xl mx-auto px-6 md:px-12 py-16 text-center">
+          <p className="font-headline italic text-2xl md:text-5xl leading-snug text-white">
+            {t('craft_quote')}
+          </p>
+          <footer className="mt-6 font-label text-[10px] uppercase tracking-[0.3em] text-secondary-container">
+            Igor Vasylkov
+          </footer>
+        </blockquote>
+      </section>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-6 py-10 md:py-16">
-        <div className="mb-16 space-y-6">
-          {bodyParagraphs.map((para, i) => (
-            <p key={i} className="font-body text-primary/80 text-base leading-relaxed">{para}</p>
-          ))}
-        </div>
+      {/* ── Talk to Igor ─────────────────────────────── */}
+      <section className="bg-surface-container-high py-20 md:py-32 px-6 md:px-12">
+        <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
 
-        <h2 className="font-headline text-2xl mb-8">{t('craft_title')}</h2>
-        <div className="mb-16 space-y-6">
-          {craftParagraphs.map((para, i) => (
-            <p key={i} className="font-body text-primary/80 text-base leading-relaxed">{para}</p>
-          ))}
-        </div>
+          <div className="md:col-span-2 flex md:justify-end">
+            <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden bg-surface-container">
+              <Image
+                src={PORTRAIT}
+                alt=""
+                fill
+                sizes="144px"
+                quality={80}
+                className="object-cover object-[78%_10%] scale-[1.8] origin-[78%_14%]"
+              />
+            </div>
+          </div>
 
-        <div className="mt-4 pt-10">
-          <p className="font-label text-[10px] uppercase tracking-widest text-secondary">{t('location')}</p>
+          <div className="md:col-span-5">
+            <span className={`${label} mb-5`}>{t('talk_label')}</span>
+            <h2 className="font-headline text-4xl md:text-6xl tracking-tight leading-none mb-6">{t('talk_title')}</h2>
+            <p className="font-body text-primary/70 leading-relaxed max-w-xl">{t('talk_body')}</p>
+          </div>
+
+          <div className="md:col-span-4 md:col-start-9 flex flex-col gap-3">
+            <Link
+              href="/contact#brief"
+              className="text-center bg-primary text-on-primary px-8 py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary transition-colors duration-[400ms]"
+            >
+              {t('talk_brief')}
+            </Link>
+            <a
+              href={TELEGRAM}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center border border-primary text-primary px-8 py-5 text-xs font-label uppercase tracking-widest hover:border-secondary hover:bg-secondary hover:text-white transition-colors duration-[400ms]"
+            >
+              {t('talk_telegram')}
+            </a>
+            <a
+              href={`tel:${PHONE}`}
+              className="group flex justify-between items-baseline px-1 pt-3 font-label text-[10px] uppercase tracking-[0.2em] text-primary/60 hover:text-secondary transition-colors duration-[400ms]"
+            >
+              <span>{t('talk_call')}</span>
+              <span className="font-headline normal-case tracking-normal text-xl text-primary group-hover:text-secondary transition-colors duration-[400ms]">
+                {PHONE_FMT}
+              </span>
+            </a>
+            <p className="px-1 font-label text-[10px] uppercase tracking-[0.2em] text-primary/40">
+              {tc('hours')}
+            </p>
+          </div>
+
         </div>
-      </div>
+      </section>
+
     </div>
   )
 }
