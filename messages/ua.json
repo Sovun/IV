@@ -23,6 +23,8 @@
     "plan_view": "Переглянути роботи",
     "plan_all": "Вся галерея",
     "plan_works": "{count, plural, one {# робота} few {# роботи} many {# робіт} other {# робіт}}",
+    "plan_area": "{area} м²",
+    "plan_scale": "План першого поверху · М 1:100",
     "plan_rooms": {
       "Kitchens": "Кухня",
       "Interior_Decorations": "Вітальня",

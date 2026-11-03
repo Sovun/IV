@@ -23,6 +23,8 @@
     "plan_view": "See the work",
     "plan_all": "View Full Gallery",
     "plan_works": "{count, plural, one {# piece} other {# pieces}}",
+    "plan_area": "{area} m²",
+    "plan_scale": "Ground floor plan · 1:100",
     "plan_rooms": {
       "Kitchens": "Kitchen",
       "Interior_Decorations": "Living room",
