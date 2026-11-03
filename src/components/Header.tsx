@@ -52,12 +52,12 @@ export default function Header() {
     <header className="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 backdrop-blur-md transition-all duration-300">
       <nav className={`flex justify-between items-center px-12 max-w-[1920px] mx-auto transition-all duration-300 ${scrolled ? 'py-4' : 'py-8'}`}>
 
-        {/* Logo: the bird and the name, in the language of the page */}
-        <Link href="/" className="block hover:opacity-80 transition-all duration-300" aria-label={locale === 'ua' ? 'Іволга' : 'Ivolga'}>
+        {/* Logo: one mark for both languages */}
+        <Link href="/" className="block hover:opacity-80 transition-all duration-300" aria-label="Ivolga">
           <Image
-            src={`/logo/ivolga-${locale}.svg`}
+            src="/logo/ivolga-en.svg"
             alt={locale === 'ua' ? 'Іволга: меблі на замовлення, Одеса' : 'Ivolga: custom furniture, Odessa'}
-            width={locale === 'ua' ? 848 : 808}
+            width={808}
             height={232}
             priority
             className={`w-auto transition-all duration-300 ${scrolled ? 'h-9' : 'h-12 md:h-14'}`}

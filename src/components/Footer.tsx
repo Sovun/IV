@@ -1,11 +1,10 @@
-import { getLocale, getTranslations } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 
 export default async function Footer() {
   const t  = await getTranslations('footer')
   const tn = await getTranslations('nav')
-  const locale = await getLocale()
   const year = new Date().getFullYear()
 
   const internalLinks = [
@@ -22,9 +21,9 @@ export default async function Footer() {
         <div className="space-y-8">
           <Link href="/" className="block w-fit hover:opacity-80 transition-all duration-[400ms]">
             <Image
-              src={`/logo/ivolga-${locale}.svg`}
-              alt={locale === 'ua' ? 'Іволга' : 'Ivolga'}
-              width={locale === 'ua' ? 848 : 808}
+              src="/logo/ivolga-en.svg"
+              alt="Ivolga"
+              width={808}
               height={232}
               className="h-10 w-auto"
             />

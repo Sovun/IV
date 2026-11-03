@@ -100,7 +100,8 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
       </head>
-      <body className="bg-surface text-on-surface font-body antialiased">
+      {/* suppressHydrationWarning: browser extensions add attributes to <body> before React loads */}
+      <body className="bg-surface text-on-surface font-body antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main>{children}</main>
