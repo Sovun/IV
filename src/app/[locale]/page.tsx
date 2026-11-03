@@ -9,7 +9,7 @@ import Contact from '@/components/Contact'
 import Image from 'next/image'
 
 // The whole site is one long page. The menu items are its four chapters:
-// home (hero, philosophy, plan, process), gallery, the master, contact.
+// home (hero, philosophy, plan, process), gallery, the workshop and its founder, contact.
 
 // Fallback images from local gallery (used when Instagram token is not set)
 const STITCH = {
@@ -95,7 +95,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <div className="aspect-[4/5] bg-surface-container-low relative overflow-hidden">
                 <Image
                   src={img(1, STITCH.heritage)}
-                  alt="Exquisite hand-crafted desk and shelving by Igor Vasylkov — master joinery and natural wood grain"
+                  alt="Hand-crafted desk and shelving by the Igor Vasylkov furniture workshop, Odessa — fine joinery and natural wood grain / Стіл і полиці від меблевої майстерні Ігоря Василькова, Одеса"
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   quality={90}
@@ -171,7 +171,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* ── Gallery ──────────────────────────────────── */}
       <Gallery categories={gallery} />
 
-      {/* ── The master ───────────────────────────────── */}
+      {/* ── The workshop and its founder ─────────────── */}
       <Master rooms={gallery.length} pieces={pieces} />
 
       {/* ── Contact ──────────────────────────────────── */}
