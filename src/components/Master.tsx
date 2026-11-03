@@ -6,7 +6,7 @@ import Image from 'next/image'
 // three dated chapters, a strip of plain facts, the craft text beside its own
 // closing line and the question the team keeps asking, set on aged oak.
 
-const PORTRAIT = '/igor-bird.jpg'
+const PORTRAIT = '/igor-portrait.jpg'
 const WOOD     = '/japan_gate.jpg'
 
 const MILESTONES = ['m1', 'm2', 'm3'] as const
