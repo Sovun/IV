@@ -7,9 +7,9 @@ export default async function Footer() {
   const year = new Date().getFullYear()
 
   const internalLinks = [
-    { label: tn('gallery'),  href: '/portfolio' as const },
-    { label: tn('master'),   href: '/about'     as const },
-    { label: tn('contact'),  href: '/contact'   as const },
+    { label: tn('gallery'),  href: '#gallery' },
+    { label: tn('master'),   href: '#master' },
+    { label: tn('contact'),  href: '#contact' },
   ]
 
   return (
@@ -33,13 +33,13 @@ export default async function Footer() {
         {/* Nav + social links */}
         <div className="flex flex-wrap gap-8 justify-center md:justify-start">
           {internalLinks.map(({ label, href }) => (
-            <Link
+            <a
               key={href}
               href={href}
               className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 hover:text-[#775a19] transition-all duration-[400ms]"
             >
               {label}
-            </Link>
+            </a>
           ))}
           <a
             href="https://www.instagram.com/igorvasylkov/"

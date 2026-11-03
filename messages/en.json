@@ -35,10 +35,24 @@
       "Study": "Study",
       "Tables": "Dining"
     },
-    "cta_label": "Your Vision, Our Craft",
-    "cta_title": "Let Us Build Your Legacy",
-    "cta_body": "Contact our head atelier for a private consultation. We specialise in full-home interior solutions and unique standalone statements.",
-    "cta_button": "Schedule a Meeting"
+    "process": {
+      "label": "How it happens",
+      "title": "Four steps. One pair of hands.",
+      "body": "Igor works with you directly, from the first visit to the finished piece. No middlemen: the person you talk to is the one who draws, makes and installs your furniture.",
+      "talk_label": "Conversation",
+      "talk_title": "We come, look and listen",
+      "talk_body": "Tell us what the room needs. We visit the space, take measurements and study what is already there: the floors, the walls, the finishes a new piece has to match. By phone, in Telegram or on site in Odessa.",
+      "draw_label": "Drawing",
+      "draw_title": "Every piece drawn to the millimetre",
+      "draw_body": "Igor draws the piece with its materials, hardware and finishes before any wood is cut. You approve the drawing. If an architect or designer is on your project, we work from their plans alongside them.",
+      "make_label": "Workshop",
+      "make_title": "Made by hand in our Odessa workshop",
+      "make_body": "Oak, walnut, ash, metal, glass. The piece is built in our workshop and finished with natural oils that keep the wood alive to the touch.",
+      "fit_label": "Installation",
+      "fit_title": "Fitted to your home, not the other way round",
+      "fit_body": "We bring the piece to you and fit it on site, adjusting to walls that are rarely straight and floors that are rarely level. Then it stays with you, built to be passed down.",
+      "cta": "Start with a conversation"
+    }
   },
   "portfolio": {
     "label": "Crafted in Odessa",
@@ -64,14 +78,25 @@
   "about": {
     "title": "The Master",
     "subtitle": "Igor Vasylkov — Bespoke Furniture Atelier, Est. 2002",
+    "lede": "A former officer who opened a workshop in Odessa in 2002 and has done one thing since: furniture that looks just as good twenty years on.",
     "body": "After Ukrainian independence, Igor Vasylkov, a former military officer, spent much of the 1990s working two jobs at once. At some point that stopped feeling like a plan. He wanted work that was genuinely his. Something worth giving his time to.\n\nHe started by building the kitchen in his new apartment. Designed it himself, built it himself. It worked. He kept going. In 2002, he opened a workshop in Odessa. The rule was simple: take work worth doing, and do it with care.\n\nTwenty-plus years on, the approach hasn't changed. Homeowners, restaurant owners, developers across Ukraine and further out. They come when they want something made, not selected.",
+    "timeline_label": "The road",
+    "m1_year": "1990s",
+    "m1_title": "Two jobs at once",
+    "m2_year": "2002",
+    "m2_title": "A workshop in Odessa",
+    "m3_year": "Today",
+    "m3_title": "The same approach",
+    "fact_since": "the year the workshop opened",
+    "fact_rooms": "{count, plural, one {room of one home} other {rooms of one home}}",
+    "fact_pieces": "{count, plural, one {piece in the gallery} other {pieces in the gallery}}",
+    "fact_hands": "pair of hands, from drawing to fitting",
     "craft_title": "An Approach Forged in Complexity",
     "craft_text": "We don't avoid complicated projects. Full apartment interiors, restaurants, spaces with unusual layouts or existing structures that need matching — that's most of what we do.\n\nWe're involved from the first conversation through to installation, working directly with clients. When architects or designers are involved, we work alongside them. The question we keep coming back to: will this still look good and feel right in ten years? In twenty?\n\nMaterials aren't a constraint here. Oak, walnut, metal, glass — old buildings with unusual finishes that need to be matched exactly. Clients tend to be surprised that the piece feels handmade and also fits with precision. That combination takes effort. We think it's the point.\n\nFurniture that gets passed down.",
+    "craft_quote": "Will this still look good and feel right in ten years? In twenty?",
     "location": "Odessa, Ukraine"
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "Get in touch for a free consultation",
     "phone_label": "Phone",
     "email_label": "Email",
     "telegram_label": "Telegram",
@@ -79,7 +104,7 @@
     "hours": "Mon–Sat: 9:00–19:00",
     "location": "Odessa, Ukraine",
     "brief": {
-      "title": "Tell us about your project",
+      "title": "Arrange a meeting",
       "intro": "Four quick steps and your note to Igor is ready. Pick what you'd like made and we'll draft the message, so all that's left is to send it.",
       "step_what": "What are we making?",
       "step_stage": "Where are you at?",
