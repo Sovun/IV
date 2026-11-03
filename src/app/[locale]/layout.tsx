@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ? 'Іволга | Меблі на замовлення в Одесі'
       : 'Ivolga | Custom Furniture in Odessa, Ukraine',
     description: isUA
-      ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2002 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Власник майстерні: Ігор Васильков. Телефон: +380674864629'
-      : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2002. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Owner: Igor Vasylkov. Call: +380674864629',
+      ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2002 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Власник майстерні: Ігор Васильков. Телефон: +380977939401'
+      : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2002. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Owner: Igor Vasylkov. Call: +380977939401',
     keywords: isUA
       ? ['Іволга', 'меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення', 'Ігор Васильков']
       : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa', 'Igor Vasylkov'],
@@ -53,8 +53,9 @@ const schemaOrg = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo/ivolga-mark.svg`,
   image: `${SITE_URL}/logo/ivolga-en.svg`,
-  telephone: '+380674864629',
+  telephone: '+380977939401',
   email: 'ive@ukr.net',
+  sameAs: ['https://www.instagram.com/igorvasylkov/'],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Odessa',

@@ -30,7 +30,7 @@ export default async function Footer() {
           </Link>
           <div className="font-label tracking-wider text-[10px] uppercase text-[#5f5e5e]/60 leading-relaxed">
             Odessa, Ukraine<br />
-            <span>+380 67 486 4629</span><br />
+            <span>+380 97 793 9401</span><br />
             <a href="mailto:ive@ukr.net" className="hover:text-[#775a19] transition-colors duration-[400ms]">
               ive@ukr.net
             </a>
