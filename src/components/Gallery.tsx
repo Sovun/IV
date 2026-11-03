@@ -194,7 +194,7 @@ export default function Gallery({ categories }: { categories: GalleryCategory[] 
                   >
                     <Image
                       src={photo.src}
-                      alt={`Custom furniture by Igor Vasylkov — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
+                      alt={`Custom furniture by the Ivolga workshop, Odessa — ${tCat(photo.category as Parameters<typeof tCat>[0])}`}
                       fill
                       sizes={big ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
                       quality={85}

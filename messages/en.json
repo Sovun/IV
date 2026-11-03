@@ -2,7 +2,7 @@
   "nav": {
     "home": "Home",
     "gallery": "Gallery",
-    "master": "The Master",
+    "master": "About",
     "contact": "Contact"
   },
   "home": {
@@ -14,7 +14,7 @@
     "hero_cta_secondary": "Explore Collection",
     "philosophy_title": "Heritage in Every Grain",
     "philosophy_quote": "We do not believe in the temporary. Every piece that leaves our workshop is built to witness a century of family gatherings.",
-    "philosophy_attribution": "— Igor Vasylkov, founder and managing director",
+    "philosophy_attribution": "— Igor Vasylkov, owner of the Ivolga workshop",
     "philosophy_body": "Rooted in the rich artisan traditions of Odessa and inspired by Italian furniture design, our furniture workshop and its team of craftsmen specialise in joinery that defies mass-market standards. We use natural and traditional materials that bring tactile pleasure to everyday use, oils to preserve the living soul of the material, and modern techniques that ensure comfort and durability.",
     "plan_label": "Everything from one workshop",
     "plan_title": "One home. One workshop.",
@@ -76,17 +76,17 @@
     "Stairs": "Stairs"
   },
   "about": {
-    "title": "The Master",
-    "subtitle": "Igor Vasylkov — Founder and Managing Director, Furniture Workshop in Odessa, Est. 2002",
-    "lede": "A former officer who opened a workshop in Odessa in 2002 and gathered a team of professionals in it. The work has stayed the same: furniture that looks just as good twenty years on.",
-    "body": "After Ukrainian independence, Igor Vasylkov, a former military officer, spent much of the 1990s working two jobs at once. At some point that stopped feeling like a plan. He wanted work that was genuinely his. Something worth giving his time to.\n\nHe started by building the kitchen in his new apartment. Designed it himself, built it himself. It worked. He kept going. In 2002, he opened a workshop in Odessa. The rule was simple: take work worth doing, and do it with care.\n\nTwenty-plus years on, a team of professionals builds the furniture in the workshop, while Igor, as owner and managing director, runs every project from the first conversation to installation. The approach hasn't changed. Homeowners, restaurant owners, developers across Ukraine and further out. They come when they want something made, not selected.",
+    "title": "The Ivolga Workshop",
+    "subtitle": "Custom furniture in Odessa since 2002. Owner and managing director: Igor Vasylkov",
+    "lede": "Ivolga began as the workshop of one former officer, who opened it in Odessa in 2002 and gathered a team of professionals. The work has stayed the same: furniture that looks just as good twenty years on.",
+    "body": "After Ukrainian independence, Igor Vasylkov, a former military officer, spent much of the 1990s working two jobs at once. At some point that stopped feeling like a plan. He wanted work that was genuinely his. Something worth giving his time to.\n\nHe started by building the kitchen in his new apartment. Designed it himself, built it himself. It worked. He kept going. In 2002, he opened a workshop in Odessa. The rule was simple: take work worth doing, and do it with care.\n\nTwenty-plus years on, a team of professionals builds the furniture at Ivolga, while Igor Vasylkov, as owner and managing director, runs every project from the first conversation to installation. The approach hasn't changed. Homeowners, restaurant owners, developers across Ukraine and further out. They come when they want something made, not selected.",
     "timeline_label": "The road",
     "m1_year": "1990s",
     "m1_title": "Two jobs at once",
     "m2_year": "2002",
     "m2_title": "A workshop in Odessa",
     "m3_year": "Today",
-    "m3_title": "A team, the same approach",
+    "m3_title": "Ivolga: a team, the same approach",
     "fact_since": "the year the workshop was founded",
     "fact_rooms": "{count, plural, one {room of one home} other {rooms of one home}}",
     "fact_pieces": "{count, plural, one {piece in the gallery} other {pieces in the gallery}}",
@@ -122,7 +122,7 @@
       "note_placeholder": "Anything else? Sizes, materials, wishes...",
       "name_placeholder": "Your name",
       "preview_label": "Your message",
-      "preview_to": "To: Igor Vasylkov",
+      "preview_to": "To: Igor Vasylkov, Ivolga",
       "manual_hint": "You are editing the letter by hand, so the steps no longer change it.",
       "manual_reset": "Rebuild from the steps",
       "letter_greeting": "Hello Igor,",
@@ -149,6 +149,6 @@
   },
   "footer": {
     "crafted": "Crafted in Odessa",
-    "copyright": "© {year} Igor Vasylkov. All rights reserved."
+    "copyright": "© {year} Ivolga. All rights reserved."
   }
 }

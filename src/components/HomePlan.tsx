@@ -343,7 +343,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
               <Image
                 key={r.key}
                 src={r.src}
-                alt={`${tCat(r.key)} — Igor Vasylkov, Odessa`}
+                alt={`${tCat(r.key)} — Ivolga workshop, Odessa`}
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"
                 quality={85}

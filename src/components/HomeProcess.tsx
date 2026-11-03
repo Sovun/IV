@@ -52,7 +52,7 @@ export default function HomeProcess({ photos }: { photos: string[] }) {
                 <Image
                   key={key}
                   src={photos[i]}
-                  alt={`${t(`${key}_title`)} — Igor Vasylkov, Odessa`}
+                  alt={`${t(`${key}_title`)} — Ivolga workshop, Odessa`}
                   fill
                   sizes="40vw"
                   quality={85}
@@ -98,7 +98,7 @@ export default function HomeProcess({ photos }: { photos: string[] }) {
                   <div className="relative aspect-[3/2] overflow-hidden bg-surface-container mb-6 md:hidden">
                     <Image
                       src={photos[i]}
-                      alt={`${t(`${key}_title`)} — Igor Vasylkov, Odessa`}
+                      alt={`${t(`${key}_title`)} — Ivolga workshop, Odessa`}
                       fill
                       sizes="100vw"
                       quality={80}
