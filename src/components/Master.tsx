@@ -6,7 +6,7 @@ import Image from 'next/image'
 // plain facts, the craft text beside its own closing line and the question
 // he keeps asking, set on aged oak.
 
-const PORTRAIT = '/20231103_081535.jpg'
+const PORTRAIT = '/igor-bird.jpg'
 const WOOD     = '/japan_gate.jpg'
 
 const MILESTONES = ['m1', 'm2', 'm3'] as const
@@ -53,7 +53,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 quality={85}
-                className="object-cover object-[50%_14%]"
+                className="object-cover"
               />
             </div>
             <p className="mt-4 flex justify-between font-label text-[10px] uppercase tracking-[0.25em] text-primary/50">
