@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { getInstagramPhotos } from '@/lib/instagram'
 import { getGalleryPhotos } from '@/lib/gallery'
 import HomePlan from '@/components/HomePlan'
+import HeroReveal from '@/components/HeroReveal'
 import Image from 'next/image'
 
 // Fallback images from local gallery (used when Instagram token is not set)
@@ -24,48 +25,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <div className="bg-surface text-primary selection:bg-secondary selection:text-on-secondary">
 
       {/* ── Hero ─────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={img(0, STITCH.hero)}
-            alt="Bespoke Contemporary Kitchen — Igor Vasylkov, Odessa"
-            fill
-            sizes="100vw"
-            quality={90}
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900/90 via-charcoal-900/55 to-transparent" />
-        </div>
-
-        <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <div className="max-w-3xl">
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary-container mb-6 block">
-              {t('hero_label')}
-            </span>
-            <h1 className="text-5xl md:text-8xl font-headline tracking-tighter leading-tight text-white mb-6 md:mb-8">
-              {t('hero_title_1')} <br />{t('hero_title_2')}
-            </h1>
-            <p className="text-base md:text-xl text-white/80 max-w-xl mb-8 md:mb-12 leading-relaxed">
-              {t('hero_description')}
-            </p>
-            <div className="flex items-center gap-4 md:gap-12">
-              <Link
-                href="/contact"
-                className="flex-1 md:flex-none text-center bg-white text-charcoal-900 px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
-              >
-                {t('hero_cta_primary')}
-              </Link>
-              <Link
-                href="/portfolio"
-                className="flex-1 md:flex-none text-center border border-white/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:border-secondary hover:bg-secondary hover:text-white transition-all duration-[400ms]"
-              >
-                {t('hero_cta_secondary')}
-              </Link>
-            </div>
+      <HeroReveal
+        src={img(0, STITCH.hero)}
+        alt="Bespoke Contemporary Kitchen — Igor Vasylkov, Odessa"
+        hint={t('hero_reveal_hint')}
+      >
+        <div className="max-w-3xl">
+          <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary-container mb-6 block">
+            {t('hero_label')}
+          </span>
+          <h1 className="text-5xl md:text-8xl font-headline tracking-tighter leading-tight text-white mb-6 md:mb-8">
+            {t('hero_title_1')} <br />{t('hero_title_2')}
+          </h1>
+          <p className="text-base md:text-xl text-white/80 max-w-xl mb-8 md:mb-12 leading-relaxed">
+            {t('hero_description')}
+          </p>
+          <div className="flex items-center gap-4 md:gap-12">
+            <Link
+              href="/contact"
+              className="flex-1 md:flex-none text-center bg-white text-charcoal-900 px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-[400ms]"
+            >
+              {t('hero_cta_primary')}
+            </Link>
+            <Link
+              href="/portfolio"
+              className="flex-1 md:flex-none text-center border border-white/50 text-white px-6 md:px-10 py-4 md:py-5 text-xs font-label uppercase tracking-widest hover:border-secondary hover:bg-secondary hover:text-white transition-all duration-[400ms]"
+            >
+              {t('hero_cta_secondary')}
+            </Link>
           </div>
         </div>
-      </section>
+      </HeroReveal>
 
       {/* ── Our Philosophy ───────────────────────────── */}
       <section className="bg-surface-container py-16 md:py-32 px-6 md:px-12">

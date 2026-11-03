@@ -72,3 +72,70 @@ body {
   line-height: 1;
   user-select: none;
 }
+
+/* ── Hero: line drawing that the cursor reveals into the photo ── */
+@property --x { syntax: '<percentage>'; inherits: true; initial-value: 62%; }
+@property --y { syntax: '<percentage>'; inherits: true; initial-value: 58%; }
+
+.hero-reveal {
+  --x: 62%;
+  --y: 58%;
+  --r: clamp(150px, 19vw, 300px);
+  --feather: 130px;
+  animation: hero-drift 18s ease-in-out infinite alternate;
+  transition: --x 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), --y 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hero-reveal[data-live] { animation: none; }
+
+.hero-reveal__sketch { isolation: isolate; background: var(--color-charcoal-900); }
+
+/* Photo + inverted blurred copy, colour-dodged: a pencil sketch on white.
+   Inverting the result turns it into pale lines on dark paper. */
+.hero-reveal__trace { filter: invert(1) brightness(1.7) contrast(1.25); }
+.hero-reveal__dodge {
+  filter: grayscale(1) invert(1) blur(3px);
+  mix-blend-mode: color-dodge;
+}
+.hero-reveal__trace img:first-child { filter: grayscale(1); }
+
+/* Warm the white lines to bone and sand */
+.hero-reveal__tint {
+  background: linear-gradient(135deg, oklch(90% 0.05 80), oklch(84% 0.09 75));
+  mix-blend-mode: multiply;
+}
+
+.hero-reveal__grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.hero-reveal__photo {
+  -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), #000 0, #000 var(--r), transparent calc(var(--r) + var(--feather)));
+  mask-image: radial-gradient(circle at var(--x) var(--y), #000 0, #000 var(--r), transparent calc(var(--r) + var(--feather)));
+}
+
+@keyframes hero-drift {
+  0%   { --x: 62%; --y: 58%; }
+  35%  { --x: 40%; --y: 45%; }
+  70%  { --x: 78%; --y: 70%; }
+  100% { --x: 55%; --y: 35%; }
+}
+
+.hero-reveal__cursor::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 9999px;
+  background: var(--color-secondary-container);
+  animation: hero-pulse 2.4s ease-in-out infinite;
+}
+@keyframes hero-pulse {
+  0%, 100% { transform: scale(0.6); opacity: 0.5; }
+  50%      { transform: scale(1);   opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal, .hero-reveal__cursor::after { animation: none; }
+}
