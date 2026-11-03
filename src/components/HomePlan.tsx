@@ -2,8 +2,8 @@
 import { useRef, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { Link, useRouter } from '@/i18n/navigation'
 import type { CategoryKey } from '@/lib/categories'
+import { setGalleryCategory } from '@/lib/galleryCategory'
 
 // A ground-floor plan drawn to architectural convention: cut walls as solid
 // poché, openings as gaps, thin lines for furniture, dimension strings outside.
@@ -141,7 +141,6 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
   const t      = useTranslations('home')
   const tCat   = useTranslations('categories')
   const locale = useLocale()
-  const router = useRouter()
 
   const byKey  = new Map(rooms.map(r => [r.key, r]))
   const shapes = ROOMS.filter(s => byKey.has(s.key))
@@ -154,9 +153,13 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
 
   if (!active) return null
 
-  const href = (key: CategoryKey) => ({ pathname: '/portfolio', query: { category: key } })
+  // The gallery lower on the page switches to the room and the page scrolls there
+  const go = (key: CategoryKey) => {
+    setGalleryCategory(key)
+    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+  }
   const open = (key: CategoryKey) => {
-    if (pointer.current === 'mouse' || key === activeKey) router.push(href(key))
+    if (pointer.current === 'mouse' || key === activeKey) go(key)
     else setActiveKey(key)
   }
 
@@ -199,7 +202,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
                 onPointerDown={e => { pointer.current = e.pointerType }}
                 onFocus={() => setActiveKey(s.key)}
                 onClick={() => open(s.key)}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.push(href(s.key)) } }}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(s.key) } }}
               >
                 <rect
                   x={s.x} y={s.y} width={s.w} height={s.h}
@@ -334,7 +337,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
 
       {/* ── Preview ──────────────────────────────── */}
       <div className="md:col-span-5">
-        <Link href={href(active.key)} className="group block">
+        <a href="#gallery" onClick={e => { e.preventDefault(); go(active.key) }} className="group block">
           <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
             {rooms.map(r => (
               <Image
@@ -364,7 +367,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
               {t('plan_view')}
             </span>
           </div>
-        </Link>
+        </a>
       </div>
 
     </div>

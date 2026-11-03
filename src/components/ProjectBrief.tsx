@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import type { CategoryKey } from '@/lib/categories'
-import { Link } from '@/i18n/navigation'
 import { useMoodboard } from '@/lib/moodboard'
 
 const TELEGRAM_URL = 'https://t.me/+380977939401'
@@ -83,7 +82,7 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
   )
 
   return (
-    <section id="brief" className="py-16 md:py-24 px-6 md:px-16 bg-surface border-b border-outline-variant/40">
+    <section id="brief" className="py-16 md:py-24 px-6 md:px-16 bg-surface scroll-mt-14 border-b border-outline-variant/40">
       <div className="max-w-6xl mx-auto">
 
         <div className="max-w-2xl mb-12 md:mb-16">
@@ -159,9 +158,9 @@ export default function ProjectBrief({ covers }: { covers: BriefCover[] }) {
                 ) : (
                   <p className="font-body text-xs text-primary/60 leading-relaxed">
                     {t('refs_empty')}{' '}
-                    <Link href="/portfolio" className="text-secondary border-b border-secondary/40 hover:border-secondary">
+                    <a href="#gallery" className="text-secondary border-b border-secondary/40 hover:border-secondary">
                       {t('refs_browse')}
-                    </Link>
+                    </a>
                   </p>
                 )}
               </div>

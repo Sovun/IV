@@ -5,8 +5,8 @@ import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import type { GalleryCategory } from '@/lib/gallery'
-import { Link } from '@/i18n/navigation'
 import { useMoodboard } from '@/lib/moodboard'
+import { setGalleryCategory, useGalleryCategory } from '@/lib/galleryCategory'
 
 // Editorial layout for 3:2 photographs: every three pieces form a module with
 // one large image (two columns, two rows) beside two stacked small ones. The
@@ -33,15 +33,14 @@ function place(i: number, n: number) {
   return { col: `${i - modules * 3 + 1}`, row: `${row}`, big: false, fill: false }
 }
 
-export default function PortfolioPage({ categories, initialKey }: { categories: GalleryCategory[]; initialKey?: string }) {
+export default function Gallery({ categories }: { categories: GalleryCategory[] }) {
   const t    = useTranslations('portfolio')
   const tCat = useTranslations('categories')
 
-  // ?category= from the home plan opens straight on that category
-  const [activeKey, setActiveKey] = useState<string>(initialKey ?? categories[0]?.key ?? '')
+  // Chosen here or on the home plan; null means the first category
+  const activeKey = useGalleryCategory()
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
-  // Fall back to the first category if the active one is missing (e.g. locale switch)
   const activeCategory = categories.find(c => c.key === activeKey) ?? categories[0]
   const slides = (activeCategory?.photos ?? []).map(p => ({
     src: p.src,
@@ -52,6 +51,16 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
   const openLightbox = useCallback((idx: number) => setLightboxIndex(idx), [])
 
   const { saved, isSaved, toggle } = useMoodboard()
+
+  // The brief lower on the page shows the saved photos itself, so the bar steps aside there
+  const [briefInView, setBriefInView] = useState(false)
+  useEffect(() => {
+    const brief = document.getElementById('brief')
+    if (!brief) return
+    const io = new IntersectionObserver(([e]) => setBriefInView(e.isIntersecting))
+    io.observe(brief)
+    return () => io.disconnect()
+  }, [])
   const currentPhoto = activeCategory?.photos[lightboxIndex]
 
   // Carry the photo into the brief as a reference, then go there
@@ -98,10 +107,10 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
   }
 
   return (
-    <div className="bg-surface text-primary min-h-screen">
+    <section id="gallery" className="bg-surface text-primary scroll-mt-14">
 
-      {/* Page header */}
-      <div className="text-center pt-40 pb-20 px-6 bg-surface-container">
+      {/* Section header */}
+      <div className="text-center py-20 md:py-28 px-6 bg-surface-container">
         <span className="font-label text-[10px] uppercase tracking-[0.3em] text-secondary mb-6 block">
           {t('label')}
         </span>
@@ -119,7 +128,7 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
             return (
               <button
                 key={key}
-                onClick={() => setActiveKey(key)}
+                onClick={() => setGalleryCategory(key)}
                 className={`group relative aspect-[3/4] overflow-hidden text-left transition-all duration-500 ${
                   isActive ? 'scale-[1.02]' : 'opacity-80 hover:opacity-100'
                 }`}
@@ -206,15 +215,15 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
                         {saveButton(photo, `w-11 h-11 flex items-center justify-center backdrop-blur-sm transition-colors duration-[400ms] ${
                           on ? 'bg-secondary text-on-secondary' : 'bg-white/15 text-white hover:bg-secondary'
                         }`)}
-                        <Link
-                          href="/contact#brief"
+                        <a
+                          href="#brief"
                           onClick={() => keep(photo)}
                           aria-label={t('ask')}
                           title={t('ask')}
                           className="w-11 h-11 flex items-center justify-center backdrop-blur-sm bg-white/15 text-white hover:bg-secondary transition-colors duration-[400ms]"
                         >
                           <span className="material-symbols-outlined !text-xl">forum</span>
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -250,10 +259,10 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
 
       {/* Moodboard bar */}
       <div className={`fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md transition-all duration-500 ${
-        saved.length > 0 ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
+        saved.length > 0 && !briefInView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
       }`}>
-        <Link
-          href="/contact#brief"
+        <a
+          href="#brief"
           className="group flex items-center gap-4 bg-primary text-on-primary pl-2 pr-5 py-2 shadow-[0_24px_60px_-20px_rgba(40,30,15,0.6)] hover:bg-secondary transition-colors duration-[400ms]"
         >
           <span className="flex -space-x-3 shrink-0">
@@ -272,8 +281,8 @@ export default function PortfolioPage({ categories, initialKey }: { categories: 
           <span className="material-symbols-outlined text-secondary group-hover:text-on-primary transition-colors duration-[400ms]">
             arrow_forward
           </span>
-        </Link>
+        </a>
       </div>
-    </div>
+    </section>
   )
 }

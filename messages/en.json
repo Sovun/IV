@@ -52,11 +52,7 @@
       "fit_title": "Fitted to your home, not the other way round",
       "fit_body": "We bring the piece to you and fit it on site, adjusting to walls that are rarely straight and floors that are rarely level. Then it stays with you, built to be passed down.",
       "cta": "Start with a conversation"
-    },
-    "cta_label": "Your Vision, Our Craft",
-    "cta_title": "Let Us Build Your Legacy",
-    "cta_body": "Contact our head atelier for a private consultation. We specialise in full-home interior solutions and unique standalone statements.",
-    "cta_button": "Schedule a Meeting"
+    }
   },
   "portfolio": {
     "label": "Crafted in Odessa",
@@ -101,14 +97,11 @@
     "talk_label": "Straight to the master",
     "talk_title": "Talk to Igor",
     "talk_body": "No managers, no middlemen: the person who answers your call or message is the one who draws and makes the piece. Describe your project in four steps and the letter writes itself.",
-    "talk_brief": "Describe your project",
     "talk_telegram": "Write on Telegram",
     "talk_call": "Call",
     "location": "Odessa, Ukraine"
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "Get in touch for a free consultation",
     "phone_label": "Phone",
     "email_label": "Email",
     "telegram_label": "Telegram",

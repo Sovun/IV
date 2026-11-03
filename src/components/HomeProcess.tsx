@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { Link } from '@/i18n/navigation'
 
 // How a piece comes to be, told as a scroll story: the steps pass down the
 // right column while a photo for the current step stays pinned on the left.
@@ -119,15 +118,15 @@ export default function HomeProcess({ photos }: { photos: string[] }) {
             })}
 
             <li className="pt-6 md:pt-0 md:min-h-[30vh] md:flex md:items-center">
-              <Link
-                href="/contact#brief"
+              <a
+                href="#brief"
                 className="inline-flex items-center gap-4 font-label font-bold text-[10px] uppercase tracking-[0.2em] text-primary hover:text-secondary transition-colors duration-[400ms] group"
               >
                 <span className="border-b border-secondary pb-1">{t('cta')}</span>
                 <span className="material-symbols-outlined text-secondary transition-transform duration-[400ms] group-hover:translate-x-1">
                   arrow_forward
                 </span>
-              </Link>
+              </a>
             </li>
           </ol>
 
