@@ -39,8 +39,9 @@ export default function GalleryHighlights({ photos, categories }: {
         </div>
       </div>
 
-      {/* The way into the full gallery */}
-      <div className="bg-surface-container py-14 md:py-24 px-6 md:px-12">
+      {/* The way into the full gallery. No bottom padding: the workshop section
+          below shares this background and brings its own top padding. */}
+      <div className="bg-surface-container pt-14 md:pt-24 px-6 md:px-12">
         <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
           <div className="md:col-span-5">
             <h3 className="font-headline text-3xl md:text-5xl leading-tight mb-5">{t('all_title')}</h3>

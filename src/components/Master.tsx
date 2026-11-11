@@ -31,7 +31,8 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
     <section id="master" className="bg-surface text-primary scroll-mt-14">
 
       {/* ── Masthead ─────────────────────────────────── */}
-      <div className="bg-surface-container pt-20 md:pt-32 pb-16 md:pb-0 px-6 md:px-12">
+      {/* Small top padding on desktop: the portrait already sits 7rem lower (translate-y-28) */}
+      <div className="bg-surface-container pt-20 md:pt-12 pb-16 md:pb-0 px-6 md:px-12">
         <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-end">
 
           <div className="md:col-span-7 md:pb-28">

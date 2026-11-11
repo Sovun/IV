@@ -19,17 +19,22 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: isUA
       ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2003 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Телефон: +380977939401'
       : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2003. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Call: +380977939401',
-    keywords: isUA
-      ? ['Іволга', 'меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення']
-      : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa'],
+    // Russian search terms ride along on both locales: many people in Odessa search in Russian,
+    // but the interface stays Ukrainian and English.
+    keywords: [
+      ...(isUA
+        ? ['Іволга', 'меблі на замовлення Одеса', 'кухня на замовлення Одеса', 'шафа на замовлення Одеса', 'гардеробна на замовлення Одеса', 'столярні вироби Одеса', 'меблі з дерева Одеса', 'сходи з дерева Одеса']
+        : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'custom kitchen Odessa', 'handmade furniture Ukraine', 'wood furniture Odessa']),
+      ...RU_KEYWORDS,
+    ],
     alternates: {
       canonical: `/${locale}`,
-      languages: { 'uk': '/ua', 'en': '/en' },
+      languages: { 'uk': '/ua', 'en': '/en', 'x-default': '/ua' },
     },
     openGraph: {
       title: isUA ? 'Іволга: меблі на замовлення' : 'Ivolga: custom furniture',
       siteName: isUA ? 'Іволга' : 'Ivolga',
-      images: [{ url: '/logo/ivolga-mark.svg', alt: isUA ? 'Іволга' : 'Ivolga' }],
+      images: [{ url: '/logo/ivolga-og.jpg', width: 1200, height: 630, alt: isUA ? 'Іволга' : 'Ivolga' }],
       description: isUA ? 'Майстерність у кожній деталі. Одеса, Україна.' : 'Mastery in Every Detail. Odessa, Ukraine.',
       locale: isUA ? 'uk_UA' : 'en_US',
       type: 'website',
@@ -37,22 +42,46 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
+const RU_KEYWORDS = [
+  'Иволга', 'мебель на заказ Одесса', 'изготовление мебели на заказ Одесса', 'кухня на заказ Одесса',
+  'шкаф купе на заказ Одесса', 'гардеробная на заказ Одесса', 'столярная мастерская Одесса', 'мебель из дерева Одесса',
+]
+
+// What the workshop makes, in English, Ukrainian and Russian, for the offer catalog below
+const SERVICES = [
+  ['Custom kitchens',            'Кухні на замовлення',          'Кухни на заказ'],
+  ['Custom doors',               'Двері на замовлення',          'Двери на заказ'],
+  ['Custom tables',              'Столи на замовлення',          'Столы на заказ'],
+  ['Custom bedroom furniture',   'Спальні на замовлення',        'Спальни на заказ'],
+  ['Custom wardrobes',           'Шафи на замовлення',           'Шкафы на заказ'],
+  ['Custom wooden stairs',       'Сходи з дерева на замовлення', 'Лестницы из дерева на заказ'],
+]
+
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'FurnitureStore'],
   name: 'Ivolga',
-  alternateName: ['Іволга', 'Ivolga Custom Furniture', 'Іволга Меблі на замовлення'],
-  description: 'Ivolga is a custom furniture workshop in Odessa, Ukraine, with a team of professional craftsmen. Kitchens, wardrobes, doors, stairs, tables, restaurant décor.',
+  alternateName: ['Іволга', 'Иволга', 'Ivolga Custom Furniture', 'Іволга Меблі на замовлення', 'Иволга Мебель на заказ'],
+  description: 'Ivolga is a custom furniture workshop in Odessa, Ukraine, with a team of professional craftsmen. It designs and makes furniture to order: kitchens, doors, tables, bedrooms, wardrobes and stairs, plus restaurant décor, from practically any wood, with modern hardware and Italian lacquer and paint finishes. Works with interior designers and architecture studios.',
+  knowsAbout: ['Custom furniture manufacturing', 'Joinery', 'Wood furniture', 'Interior design'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Custom furniture manufacturing',
+    itemListElement: SERVICES.map(([en, uk, ru]) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: en, alternateName: [uk, ru], serviceType: 'Custom furniture manufacturing', areaServed: 'Odessa, Ukraine' },
+    })),
+  },
   foundingDate: '2003',
   founder: {
     '@type': 'Person',
     name: 'Igor Vasylkov',
-    alternateName: 'Ігор Васильков',
+    alternateName: ['Ігор Васильков', 'Игорь Васильков'],
     jobTitle: 'Owner and Managing Director',
   },
   url: SITE_URL,
-  logo: `${SITE_URL}/logo/ivolga-mark.svg`,
-  image: `${SITE_URL}/logo/ivolga-en.svg`,
+  logo: `${SITE_URL}/logo/ivolga-logo.jpg`,
+  image: `${SITE_URL}/logo/ivolga-og.jpg`,
   telephone: '+380977939401',
   email: 'ive@ukr.net',
   sameAs: ['https://www.instagram.com/igorvasylkov/'],
@@ -96,6 +125,7 @@ export default async function LocaleLayout({
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;700&display=swap&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
           rel="stylesheet"
         />
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}

@@ -5,6 +5,7 @@ import HomePlan from '@/components/HomePlan'
 import HomeProcess from '@/components/HomeProcess'
 import GalleryHighlights from '@/components/GalleryHighlights'
 import Master from '@/components/Master'
+import HomeFaq from '@/components/HomeFaq'
 import ContactDesk from '@/components/ContactDesk'
 import ContactDock from '@/components/ContactDock'
 import Image from 'next/image'
@@ -178,6 +179,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* ── The workshop ─────────────────────────────── */}
       <Master rooms={gallery.length} pieces={pieces} />
+
+      {/* ── Questions before the call ────────────────── */}
+      <HomeFaq />
 
       {/* ── Contact ──────────────────────────────────── */}
       <ContactDesk />

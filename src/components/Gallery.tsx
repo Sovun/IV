@@ -46,7 +46,7 @@ export default function Gallery({ categories }: { categories: GalleryCategory[] 
                 {cover && (
                   <Image
                     src={cover}
-                    alt={tCat(key)}
+                    alt={t('cover_alt', { category: tCat(key) })}
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                     className={`object-cover transition-transform duration-700 ${

@@ -1,11 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 import { CATEGORIES, type CategoryKey } from './categories'
+import { PHOTO_ALTS } from './photoAlts'
 
 export interface GalleryPhoto {
   id: string
   src: string
   category: CategoryKey
+  // What the photo shows, [English, Ukrainian]; see photoAlts.ts
+  alt?: [string, string]
 }
 
 export interface GalleryCategory {
@@ -35,7 +38,7 @@ export function getHighlights(): GalleryPhoto[] {
   const galleryRoot = path.join(process.cwd(), 'public', 'gallery')
   return HIGHLIGHTS
     .filter(f => fs.existsSync(path.join(galleryRoot, f)))
-    .map(f => ({ id: f, src: `/gallery/${f}`, category: f.split('/')[0] as CategoryKey }))
+    .map(f => ({ id: f, src: `/gallery/${f}`, category: f.split('/')[0] as CategoryKey, alt: PHOTO_ALTS[f] }))
 }
 
 export function getGalleryPhotos(): GalleryCategory[] {
@@ -64,6 +67,7 @@ export function getGalleryPhotos(): GalleryCategory[] {
       id: `${category}-${f}`,
       src: `/gallery/${category}/${f}`,
       category,
+      alt: PHOTO_ALTS[`${category}/${f}`],
     }))
 
     return [{ key: category, photos }]
