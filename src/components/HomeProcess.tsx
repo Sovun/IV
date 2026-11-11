@@ -119,7 +119,7 @@ export default function HomeProcess({ photos }: { photos: string[] }) {
 
             <li className="pt-6 md:pt-0 md:min-h-[30vh] md:flex md:items-center">
               <a
-                href="#brief"
+                href="#contact"
                 className="inline-flex items-center gap-4 font-label font-bold text-[10px] uppercase tracking-[0.2em] text-primary hover:text-secondary transition-colors duration-[400ms] group"
               >
                 <span className="border-b border-secondary pb-1">{t('cta')}</span>

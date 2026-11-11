@@ -1,15 +1,18 @@
 import { getTranslations } from 'next-intl/server'
 import { getInstagramPhotos } from '@/lib/instagram'
-import { getGalleryPhotos } from '@/lib/gallery'
+import { getGalleryPhotos, getHighlights } from '@/lib/gallery'
 import HomePlan from '@/components/HomePlan'
 import HomeProcess from '@/components/HomeProcess'
-import Gallery from '@/components/Gallery'
+import GalleryHighlights from '@/components/GalleryHighlights'
 import Master from '@/components/Master'
-import Contact from '@/components/Contact'
+import ContactDesk from '@/components/ContactDesk'
+import ContactDock from '@/components/ContactDock'
 import Image from 'next/image'
+import { Link } from '@/i18n/navigation'
 
 // The whole site is one long page. The menu items are its four chapters:
-// home (hero, philosophy, plan, process), gallery, the workshop and its founder, contact.
+// home (hero, philosophy, plan, process), selected works, the workshop, contact.
+// The full gallery lives on its own page, /portfolio.
 
 // Fallback images from local gallery (used when Instagram token is not set)
 const STITCH = {
@@ -31,7 +34,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: 'home' })
   const gallery = getGalleryPhotos()
   const rooms  = gallery.map(({ key, photos }) => ({ key, src: photos[0].src, count: photos.length }))
-  const covers = gallery.map(({ key, photos }) => ({ key, src: photos[0].src }))
   const pieces = gallery.reduce((n, c) => n + c.photos.length, 0)
 
   const img = (idx: number, fallback: string) =>
@@ -141,24 +143,24 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <h2 className="text-3xl md:text-5xl font-headline mb-6">{t('plan_title')}</h2>
                 <p className="text-primary/70 leading-relaxed font-body">{t('plan_body')}</p>
               </div>
-              <a
-                href="#gallery"
+              <Link
+                href="/portfolio"
                 className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms] hidden md:block whitespace-nowrap"
               >
                 {t('plan_all')}
-              </a>
+              </Link>
             </div>
 
             <HomePlan rooms={rooms} />
 
             {/* Mobile: view all link */}
             <div className="mt-10 text-center md:hidden">
-              <a
-                href="#gallery"
+              <Link
+                href="/portfolio"
                 className="font-label font-bold text-[10px] uppercase tracking-[0.2em] border-b border-secondary pb-1 text-primary hover:text-secondary transition-colors duration-[400ms]"
               >
                 {t('plan_all')}
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -169,13 +171,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </div>
 
       {/* ── Gallery ──────────────────────────────────── */}
-      <Gallery categories={gallery} />
+      <GalleryHighlights
+        photos={getHighlights()}
+        categories={gallery.map(({ key, photos }) => ({ key, count: photos.length }))}
+      />
 
-      {/* ── The workshop and its founder ─────────────── */}
+      {/* ── The workshop ─────────────────────────────── */}
       <Master rooms={gallery.length} pieces={pieces} />
 
       {/* ── Contact ──────────────────────────────────── */}
-      <Contact covers={covers} />
+      <ContactDesk />
+
+      {/* ── Contact, one tap away while reading ──────── */}
+      <ContactDock />
 
     </div>
   )

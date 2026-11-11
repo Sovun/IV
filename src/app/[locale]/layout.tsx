@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ? 'Іволга | Меблі на замовлення в Одесі'
       : 'Ivolga | Custom Furniture in Odessa, Ukraine',
     description: isUA
-      ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2003 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Власник майстерні: Ігор Васильков. Телефон: +380977939401'
-      : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2003. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Owner: Igor Vasylkov. Call: +380977939401',
+      ? 'Іволга: майстерня меблів на замовлення в Одесі, з 2003 року. Кухні, шафи, двері, сходи, столи, декор для ресторанів. Телефон: +380977939401'
+      : 'Ivolga: custom furniture workshop in Odessa, Ukraine, since 2003. Kitchens, wardrobes, doors, stairs, tables, restaurant décor. Call: +380977939401',
     keywords: isUA
-      ? ['Іволга', 'меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення', 'Ігор Васильков']
-      : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa', 'Igor Vasylkov'],
+      ? ['Іволга', 'меблі на замовлення', 'меблі Одеса', 'кухні на замовлення', 'шафи на замовлення']
+      : ['Ivolga', 'custom furniture Odessa', 'bespoke furniture Ukraine', 'kitchen furniture Odessa'],
     alternates: {
       canonical: `/${locale}`,
       languages: { 'uk': '/ua', 'en': '/en' },

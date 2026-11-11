@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import type { CategoryKey } from '@/lib/categories'
 import { setGalleryCategory } from '@/lib/galleryCategory'
+import { Link, useRouter } from '@/i18n/navigation'
 
 // A ground-floor plan drawn to architectural convention: cut walls as solid
 // poché, openings as gaps, thin lines for furniture, dimension strings outside.
@@ -141,6 +142,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
   const t      = useTranslations('home')
   const tCat   = useTranslations('categories')
   const locale = useLocale()
+  const router = useRouter()
 
   const byKey  = new Map(rooms.map(r => [r.key, r]))
   const shapes = ROOMS.filter(s => byKey.has(s.key))
@@ -153,10 +155,10 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
 
   if (!active) return null
 
-  // The gallery lower on the page switches to the room and the page scrolls there
+  // The full gallery opens on the room's category
   const go = (key: CategoryKey) => {
     setGalleryCategory(key)
-    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+    router.push('/portfolio#works')
   }
   const open = (key: CategoryKey) => {
     if (pointer.current === 'mouse' || key === activeKey) go(key)
@@ -337,7 +339,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
 
       {/* ── Preview ──────────────────────────────── */}
       <div className="md:col-span-5">
-        <a href="#gallery" onClick={e => { e.preventDefault(); go(active.key) }} className="group block">
+        <Link href="/portfolio#works" onClick={() => setGalleryCategory(active.key)} className="group block">
           <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
             {rooms.map(r => (
               <Image
@@ -367,7 +369,7 @@ export default function HomePlan({ rooms }: { rooms: PlanRoom[] }) {
               {t('plan_view')}
             </span>
           </div>
-        </a>
+        </Link>
       </div>
 
     </div>
