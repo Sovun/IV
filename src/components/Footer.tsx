@@ -1,16 +1,17 @@
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 
 export default async function Footer() {
   const t  = await getTranslations('footer')
   const tn = await getTranslations('nav')
+  const locale = await getLocale()
   const year = new Date().getFullYear()
 
   const internalLinks = [
-    { label: tn('gallery'),  href: '#gallery' },
-    { label: tn('master'),   href: '#master' },
-    { label: tn('contact'),  href: '#contact' },
+    { label: tn('gallery'),  href: `/${locale}#gallery` },
+    { label: tn('master'),   href: `/${locale}#master` },
+    { label: tn('contact'),  href: `/${locale}#contact` },
   ]
 
   return (

@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 
-// The workshop and its founder as an editorial dossier: a masthead with the
-// founder's portrait hanging over the fold, the story of the business told as
+// The workshop as an editorial dossier: a masthead with a portrait hanging
+// over the fold, the story of the business told as
 // three dated chapters, a strip of plain facts, the craft text beside its own
 // closing line and the question the team keeps asking, set on aged oak.
 
@@ -49,7 +49,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
             <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-low">
               <Image
                 src={PORTRAIT}
-                alt="Igor Vasylkov, owner of the Ivolga custom furniture workshop, Odessa / Ігор Васильков, власник меблевої майстерні «Іволга», Одеса"
+                alt="In the Ivolga custom furniture workshop, Odessa / У меблевій майстерні «Іволга», Одеса"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 quality={85}
@@ -57,7 +57,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
               />
             </div>
             <p className="mt-4 flex justify-between font-label text-[10px] uppercase tracking-[0.25em] text-primary/50">
-              <span>Igor Vasylkov</span>
+              <span>{t('m2_year')}</span>
               <span>{t('location')}</span>
             </p>
           </div>
@@ -141,7 +141,7 @@ export default async function Master({ rooms, pieces }: { rooms: number; pieces:
             {t('craft_quote')}
           </p>
           <footer className="mt-6 font-label text-[10px] uppercase tracking-[0.3em] text-secondary-container">
-            Igor Vasylkov
+            {t('title')}
           </footer>
         </blockquote>
       </div>

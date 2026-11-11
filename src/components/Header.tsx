@@ -40,7 +40,12 @@ export default function Header() {
     return () => io.disconnect()
   }, [pathname])
 
-  const navLinks = SECTIONS.map(id => ({ id, href: `#${id}`, label: t(id) }))
+  // Off the home page only the gallery anchor exists, so the rest lead back home
+  const navLinks = SECTIONS.map(id => ({
+    id,
+    href: pathname === '/' || id === 'gallery' ? `#${id}` : `/${locale}#${id}`,
+    label: t(id),
+  }))
 
   const switchLocale = () =>
     router.replace(pathname + window.location.hash, { locale: locale === 'ua' ? 'en' : 'ua' })
