@@ -97,7 +97,8 @@
     "outro_title": "Found something of yours?",
     "outro_cta": "Talk to the workshop",
     "photo_alt": "{category}: custom furniture by the Ivolga workshop, Odessa. Photo {n} of {total}",
-    "cover_alt": "{category}: custom furniture by the Ivolga workshop, Odessa"
+    "cover_alt": "{category}: custom furniture by the Ivolga workshop, Odessa",
+    "alt_suffix": "Ivolga workshop, Odessa"
   },
   "categories": {
     "Kitchens": "Kitchens",

@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
@@ -35,6 +35,7 @@ function place(i: number, n: number) {
 export default function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
   const tCat = useTranslations('categories')
   const t    = useTranslations('portfolio')
+  const locale = useLocale()
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
   // Fade each piece in as it scrolls into view; re-run when the set changes
@@ -71,7 +72,9 @@ export default function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
             >
               <Image
                 src={photo.src}
-                alt={t('photo_alt', { category: name, n: idx + 1, total: photos.length })}
+                alt={photo.alt
+                  ? `${photo.alt[locale === 'ua' ? 1 : 0]}. ${t('alt_suffix')}`
+                  : t('photo_alt', { category: name, n: idx + 1, total: photos.length })}
                 fill
                 sizes={big ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
                 quality={85}
