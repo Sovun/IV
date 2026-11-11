@@ -34,6 +34,7 @@ function place(i: number, n: number) {
 
 export default function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
   const tCat = useTranslations('categories')
+  const t    = useTranslations('portfolio')
   const [lightboxIndex, setLightboxIndex] = useState(-1)
 
   // Fade each piece in as it scrolls into view; re-run when the set changes
@@ -70,7 +71,7 @@ export default function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
             >
               <Image
                 src={photo.src}
-                alt={`Custom furniture by the Ivolga workshop, Odessa — ${name}`}
+                alt={t('photo_alt', { category: name, n: idx + 1, total: photos.length })}
                 fill
                 sizes={big ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 50vw, 33vw'}
                 quality={85}

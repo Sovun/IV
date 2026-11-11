@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/${locale}${page}`,
       lastModified,
       alternates: {
-        languages: { uk: `${SITE_URL}/ua${page}`, en: `${SITE_URL}/en${page}` },
+        languages: { uk: `${SITE_URL}/ua${page}`, en: `${SITE_URL}/en${page}`, 'x-default': `${SITE_URL}/ua${page}` },
       },
     }))
   )

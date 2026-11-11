@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       : 'All the work of the Ivolga workshop: kitchens, studies, wardrobes and bedrooms, bathrooms and saunas, interior décor, doors, tables, stairs. Odessa.',
     alternates: {
       canonical: `/${locale}/portfolio`,
-      languages: { 'uk': '/ua/portfolio', 'en': '/en/portfolio' },
+      languages: { 'uk': '/ua/portfolio', 'en': '/en/portfolio', 'x-default': '/ua/portfolio' },
     },
   }
 }

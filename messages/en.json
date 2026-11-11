@@ -52,6 +52,36 @@
       "fit_title": "Fitted to your home, not the other way round",
       "fit_body": "We bring the piece to you and fit it on site, adjusting to walls that are rarely straight and floors that are rarely level. Then it stays with you, built to be passed down.",
       "cta": "Start with a conversation"
+    },
+    "faq": {
+      "label": "Questions",
+      "title": "Before you call",
+      "items": [
+        {
+          "q": "What does the Ivolga workshop make?",
+          "a": "Custom furniture for homes and restaurants: kitchens, wardrobes and bedrooms, doors, stairs, tables, studies, bathroom and sauna interiors, and interior décor. Every piece is made to measure in our workshop in Odessa, which has been running since 2003."
+        },
+        {
+          "q": "How much does custom furniture cost?",
+          "a": "There is no price list. Every piece is designed for a particular room and project, so the cost depends on its size, the wood, the hardware and the finish. We work out the price once we have seen the space, taken measurements and drawn the piece."
+        },
+        {
+          "q": "What materials do you work with?",
+          "a": "Practically any wood, oak, walnut and ash among them, together with metal and glass. We fit modern hardware and finish the furniture with Italian lacquers and paints or with natural oils."
+        },
+        {
+          "q": "Do you work with designers and architects?",
+          "a": "Yes. We work with interior designers and architecture studios, building from their plans alongside them."
+        },
+        {
+          "q": "How does a project go?",
+          "a": "In four steps. We visit, listen and take measurements. We draw every piece to the millimetre, and you approve the drawing. Our craftsmen make it in the Odessa workshop. Our own installers fit it on site."
+        },
+        {
+          "q": "Where do you work?",
+          "a": "The workshop is in Odessa, and that is where we visit and measure on site. Homeowners, restaurant owners and developers from across Ukraine and abroad order from us too: call or write to discuss a project outside Odessa."
+        }
+      ]
     }
   },
   "portfolio": {
@@ -65,7 +95,9 @@
     "all_body": "{total} works in {count} categories: every project from the wide view down to the details.",
     "all_cta": "Open the gallery",
     "outro_title": "Found something of yours?",
-    "outro_cta": "Talk to the workshop"
+    "outro_cta": "Talk to the workshop",
+    "photo_alt": "{category}: custom furniture by the Ivolga workshop, Odessa. Photo {n} of {total}",
+    "cover_alt": "{category}: custom furniture by the Ivolga workshop, Odessa"
   },
   "categories": {
     "Kitchens": "Kitchens",
@@ -108,7 +140,7 @@
     "desk": {
       "label": "Direct line",
       "title": "Talk to the workshop",
-      "body": "Phone, Telegram or email, with no middlemen: you talk to the people accountable for the result.",
+      "body": "Phone, Telegram or email go straight to Igor Vasylkov, the founder of the workshop. No middlemen: you talk to the people accountable for the result.",
       "now": "Odessa, right now",
       "open": "Open now",
       "until": "until {time}",
